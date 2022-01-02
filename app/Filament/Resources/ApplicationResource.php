@@ -30,9 +30,10 @@ class ApplicationResource extends Resource
                             ->schema(static::applicantInformationFields()),
                         Tabs\Tab::make('Upload Requirements')
                             ->schema([
-                                Forms\Components\FileUpload::make('attachments')
+                                Forms\Components\FileUpload::make('requirements')
                                     ->multiple()
                                     ->disk('public')
+                                    ->imagePreviewHeight('250')
                             ]),
                         Tabs\Tab::make('Subject Selection')
                             ->schema([])

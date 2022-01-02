@@ -42,6 +42,7 @@ class Application extends Model
         'permanent_country',
         'status',
         'total_units',
+        'requirements',
     ];
 
     /**
@@ -55,6 +56,7 @@ class Application extends Model
         'birthdate' => 'date',
         'same_with_residence_address' => 'boolean',
         'total_units' => 'decimal:2',
+        'requirements' => 'array',
     ];
 
     public static function booted()
