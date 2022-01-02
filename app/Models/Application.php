@@ -57,8 +57,29 @@ class Application extends Model
         'total_units' => 'decimal:2',
     ];
 
+    public static function booted()
+    {
+        static::creating(function (Application $application) {
+            $application->user_id = auth()->user()->id ?? null;
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getApplicantNameAttribute()
+    {
+        if (blank($this->middle_name)) {
+            return "{$this->first_name} {$this->last_name}";
+        }
+
+        return "{$this->first_name} {$this->middle_initial}. {$this->last_name}";
+    }
+
+    public function getMiddleInitialAttribute()
+    {
+        return $this->middle_name ? $this->middle_name[0] : '';
     }
 }
