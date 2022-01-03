@@ -31,7 +31,7 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('role')
                     ->required()
-                    ->options(['Admin', 'Program Adviser', 'Dean', 'Registrar']),
+                    ->options(['Admin' => 'Admin', 'Program Adviser' => 'Program Adviser', 'Dean' => 'Dean', 'Registrar' => 'Registrar']),
                 Forms\Components\Grid::make()->columnSpan('full')->schema([
                     Forms\Components\TextInput::make('password')
                         ->password()
@@ -63,7 +63,7 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('role')->sortable()->default('Admin'),
+                Tables\Columns\TextColumn::make('role')->sortable(),
                 // Tables\Columns\TextColumn::make('email_verified_at')
                 //     ->dateTime(),
                 Tables\Columns\TextColumn::make('created_at')
