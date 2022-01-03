@@ -31,7 +31,7 @@ class SubjectResource extends Resource
                     ->searchable(),
                 Forms\Components\Select::make('category')
                     ->required()
-                    ->options(\App\Enums\SubjectCategory::asArray()),
+                    ->options(\App\Enums\SubjectCategory::asSelectArray()),
                 Forms\Components\TextInput::make('code')
                     ->required()
                     ->maxLength(255),
@@ -65,7 +65,7 @@ class SubjectResource extends Resource
                     ->column('program_id')
                     ->options(Program::pluck('label', 'id')),
                 Tables\Filters\MultiSelectFilter::make('category')
-                    ->options(\App\Enums\SubjectCategory::asArray()),
+                    ->options(\App\Enums\SubjectCategory::asSelectArray()),
             ]);
     }
 

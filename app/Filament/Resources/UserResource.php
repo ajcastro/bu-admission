@@ -32,7 +32,7 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('role')
                     ->required()
-                    ->options(\App\Enums\UserRole::asArray()),
+                    ->options(\App\Enums\UserRole::asSelectArray()),
                 Forms\Components\Grid::make()->columnSpan('full')->schema([
                     Forms\Components\TextInput::make('password')
                         ->password()
@@ -74,7 +74,7 @@ class UserResource extends Resource
             ])
             ->filters([
                 Tables\Filters\MultiSelectFilter::make('role')
-                    ->options(\App\Enums\UserRole::asArray())
+                    ->options(\App\Enums\UserRole::asSelectArray())
             ]);
     }
 

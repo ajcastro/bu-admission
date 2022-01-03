@@ -16,6 +16,9 @@ class CreateProgramsTable extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('label');
+            $table->foreignId('recommending_user_id')->nullable();
+            $table->foreignId('admitting_user_id')->nullable();
+            $table->foreignId('processing_user_id')->nullable();
             $table->timestamps();
         });
     }

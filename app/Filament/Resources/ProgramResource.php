@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\ProgramResource\Pages;
 use App\Filament\Resources\ProgramResource\RelationManagers;
 use App\Models\Program;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -28,13 +30,19 @@ class ProgramResource extends Resource
                         ->maxLength(255),
                     Forms\Components\Select::make('recommending_user_id')
                         ->label('Program Adviser')
-                        ->required(),
+                        ->required()
+                        ->searchable()
+                        ->options(User::where('role', UserRole::ProgramAdviser)->pluck('name', 'id')),
                     Forms\Components\Select::make('admitting_user_id')
                         ->label('Dean')
-                        ->required(),
-                    Forms\Components\Select::make('admitting_user_id')
+                        ->required()
+                        ->searchable()
+                        ->options(User::where('role', UserRole::Dean)->pluck('name', 'id')),
+                    Forms\Components\Select::make('processing_user_id')
                         ->label('Registrar')
                         ->required()
+                        ->searchable()
+                        ->options(User::where('role', UserRole::Registrar)->pluck('name', 'id')),
                 ])
             ]);
     }

@@ -16,6 +16,9 @@ class Program extends Model
      */
     protected $fillable = [
         'label',
+        'recommending_user_id',
+        'admitting_user_id',
+        'processing_user_id',
     ];
 
     /**
