@@ -72,7 +72,14 @@ class UserResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                //
+                Tables\Filters\MultiSelectFilter::make('role')
+                    ->options([
+                        'Applicant' => 'Applicant',
+                        'Admin' => 'Admin',
+                        'Program Adviser' => 'Program Adviser',
+                        'Dean' => 'Dean',
+                        'Registrar' => 'Registrar',
+                    ])
             ]);
     }
 
