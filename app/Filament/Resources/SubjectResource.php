@@ -51,10 +51,7 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('program')
-                    ->formatStateUsing(function (Subject $record) {
-                        return $record->program->label;
-                    }),
+                Tables\Columns\TextColumn::make('program')->sortable(),
                 Tables\Columns\TextColumn::make('category')->sortable(),
                 Tables\Columns\TextColumn::make('code')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('label')->label('Title')->searchable()->sortable(),
@@ -74,7 +71,12 @@ class SubjectResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with('program');
+        return parent::getEloquentQuery()
+            ->addSelect([
+                'program' => Program::query()
+                    ->select('label')
+                    ->whereColumn('subjects.program_id', 'programs.id')
+            ]);
     }
 
     public static function getRelations(): array
