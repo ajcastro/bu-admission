@@ -21,9 +21,20 @@ class ProgramResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('label')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Group::make([
+                    Forms\Components\TextInput::make('label')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Select::make('recommending_user_id')
+                        ->label('Program Adviser')
+                        ->required(),
+                    Forms\Components\Select::make('admitting_user_id')
+                        ->label('Dean')
+                        ->required(),
+                    Forms\Components\Select::make('admitting_user_id')
+                        ->label('Registrar')
+                        ->required()
+                ])
             ]);
     }
 
