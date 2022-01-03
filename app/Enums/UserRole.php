@@ -18,4 +18,9 @@ final class UserRole extends Enum
     const ProgramAdviser = 'Program Adviser';
     const Dean = 'Dean';
     const Registrar = 'Registrar';
+
+    public static function asSelectOptions()
+    {
+        return collect(static::asSelectArray())->reject(fn ($value) => $value === static::Applicant)->all();
+    }
 }
