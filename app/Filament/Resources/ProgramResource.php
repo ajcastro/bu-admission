@@ -29,6 +29,7 @@ class ProgramResource extends Resource
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('label')
+                        ->label('Description')
                         ->required()
                         ->maxLength(255),
                     Forms\Components\Select::make('recommending_user_id')
