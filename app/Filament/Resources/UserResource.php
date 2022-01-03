@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -31,7 +32,7 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('role')
                     ->required()
-                    ->options(['Admin' => 'Admin', 'Program Adviser' => 'Program Adviser', 'Dean' => 'Dean', 'Registrar' => 'Registrar']),
+                    ->options(\App\Enums\UserRole::asArray()),
                 Forms\Components\Grid::make()->columnSpan('full')->schema([
                     Forms\Components\TextInput::make('password')
                         ->password()
@@ -73,13 +74,7 @@ class UserResource extends Resource
             ])
             ->filters([
                 Tables\Filters\MultiSelectFilter::make('role')
-                    ->options([
-                        'Applicant' => 'Applicant',
-                        'Admin' => 'Admin',
-                        'Program Adviser' => 'Program Adviser',
-                        'Dean' => 'Dean',
-                        'Registrar' => 'Registrar',
-                    ])
+                    ->options(\App\Enums\UserRole::asArray())
             ]);
     }
 

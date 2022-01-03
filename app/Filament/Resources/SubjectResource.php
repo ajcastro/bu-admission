@@ -30,11 +30,7 @@ class SubjectResource extends Resource
                     ->searchable(),
                 Forms\Components\Select::make('category')
                     ->required()
-                    ->options(
-                        collect([
-                            'Major', 'Thesis', 'Foundation', 'Cognate',
-                        ])->mapWithKeys(fn ($value) => [$value => $value])
-                    ),
+                    ->options(\App\Enums\SubjectCategory::asArray()),
                 Forms\Components\TextInput::make('code')
                     ->required()
                     ->maxLength(255),
@@ -59,17 +55,18 @@ class SubjectResource extends Resource
                         return $record->program->label;
                     }),
                 Tables\Columns\TextColumn::make('category'),
-                Tables\Columns\TextColumn::make('code'),
-                Tables\Columns\TextColumn::make('label')->label('Title'),
+                Tables\Columns\TextColumn::make('code')->searchable(),
+                Tables\Columns\TextColumn::make('label')->label('Title')->searchable(),
                 Tables\Columns\TextColumn::make('units'),
-                Tables\Columns\TextColumn::make('professor'),
+                Tables\Columns\TextColumn::make('professor')->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
             ->filters([
-                //
+                Tables\Filters\MultiSelectFilter::make('category')
+                    ->options(\App\Enums\SubjectCategory::asArray())
             ]);
     }
 
