@@ -33,6 +33,7 @@ class ApplicationResource extends Resource
                                 Forms\Components\FileUpload::make('requirements')
                                     ->multiple()
                                     ->disk('public')
+                                    ->image()
                                     ->imagePreviewHeight('250')
                             ]),
                         Tabs\Tab::make('Subject Selection')
