@@ -55,15 +55,13 @@ class SubjectResource extends Resource
                     ->formatStateUsing(function (Subject $record) {
                         return $record->program->label;
                     }),
-                Tables\Columns\TextColumn::make('category'),
-                Tables\Columns\TextColumn::make('code')->searchable(),
-                Tables\Columns\TextColumn::make('label')->label('Title')->searchable(),
-                Tables\Columns\TextColumn::make('units'),
-                Tables\Columns\TextColumn::make('professor')->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('category')->sortable(),
+                Tables\Columns\TextColumn::make('code')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('label')->label('Title')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('units')->sortable(),
+                Tables\Columns\TextColumn::make('professor')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable(),
             ])
             ->filters([
                 Tables\Filters\MultiSelectFilter::make('program')
