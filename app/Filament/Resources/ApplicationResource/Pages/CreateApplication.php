@@ -8,4 +8,12 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateApplication extends CreateRecord
 {
     protected static string $resource = ApplicationResource::class;
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getCreateButtonFormAction(),
+            $this->getCancelButtonFormAction(),
+        ];
+    }
 }
