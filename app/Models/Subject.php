@@ -15,6 +15,7 @@ class Subject extends Model
      * @var array
      */
     protected $fillable = [
+        'program_id',
         'category',
         'code',
         'label',
@@ -32,8 +33,8 @@ class Subject extends Model
         'units' => 'decimal:2',
     ];
 
-    public function programs()
+    public function program()
     {
-        return $this->belongsToMany(Program::class);
+        return $this->belongsTo(Program::class);
     }
 }

@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class SubjectResource extends Resource
 {
@@ -19,15 +20,26 @@ class SubjectResource extends Resource
 
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category')
+                Forms\Components\Select::make('program_id')
+                    ->label('Program')
                     ->required()
-                    ->maxLength(255),
+                    ->options(\App\Models\Program::pluck('label', 'id'))
+                    ->searchable(),
+                Forms\Components\Select::make('category')
+                    ->required()
+                    ->options(
+                        collect([
+                            'Major', 'Thesis', 'Foundation', 'Cognate',
+                        ])->mapWithKeys(fn ($value) => [$value => $value])
+                    ),
                 Forms\Components\TextInput::make('code')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('label')
+                    ->label('Title')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('units')
@@ -42,9 +54,13 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('program')
+                    ->formatStateUsing(function (Subject $record) {
+                        return $record->program->label;
+                    }),
                 Tables\Columns\TextColumn::make('category'),
                 Tables\Columns\TextColumn::make('code'),
-                Tables\Columns\TextColumn::make('label'),
+                Tables\Columns\TextColumn::make('label')->label('Title'),
                 Tables\Columns\TextColumn::make('units'),
                 Tables\Columns\TextColumn::make('professor'),
                 Tables\Columns\TextColumn::make('created_at')
@@ -55,6 +71,11 @@ class SubjectResource extends Resource
             ->filters([
                 //
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('program');
     }
 
     public static function getRelations(): array
