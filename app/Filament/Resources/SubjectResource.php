@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
+use App\Models\Program;
 use App\Models\Subject;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -65,8 +66,11 @@ class SubjectResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
+                Tables\Filters\MultiSelectFilter::make('program')
+                    ->column('program_id')
+                    ->options(Program::pluck('label', 'id')),
                 Tables\Filters\MultiSelectFilter::make('category')
-                    ->options(\App\Enums\SubjectCategory::asArray())
+                    ->options(\App\Enums\SubjectCategory::asArray()),
             ]);
     }
 
