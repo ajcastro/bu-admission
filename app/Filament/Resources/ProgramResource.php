@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\LinkAction;
 
 class ProgramResource extends Resource
 {
@@ -50,6 +51,15 @@ class ProgramResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->pushActions([
+                // LinkAction::make('view_subjects')
+                //     ->label('View Subjects')
+                //     ->url(fn (Program $record): string
+                //         => route('filament.resources.subjects.index', [
+                //             'program_id' => $record->id
+                //         ]) // how can I pass the filter for program?
+                //     )
             ]);
     }
 
