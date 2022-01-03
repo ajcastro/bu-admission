@@ -25,6 +25,9 @@ class ProgramResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Group::make([
+                    Forms\Components\TextInput::make('code')
+                        ->required()
+                        ->maxLength(255),
                     Forms\Components\TextInput::make('label')
                         ->required()
                         ->maxLength(255),
@@ -51,7 +54,13 @@ class ProgramResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('label'),
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('label')
+                    ->label('description')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

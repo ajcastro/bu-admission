@@ -15,6 +15,7 @@ class Program extends Model
      * @var array
      */
     protected $fillable = [
+        'code',
         'label',
         'recommending_user_id',
         'admitting_user_id',
