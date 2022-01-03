@@ -58,7 +58,7 @@ class ProgramResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('label')
-                    ->label('description')
+                    ->label('Description')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
