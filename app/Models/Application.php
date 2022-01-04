@@ -84,4 +84,15 @@ class Application extends Model
     {
         return $this->middle_name ? $this->middle_name[0] : '';
     }
+
+    public function getStatusColorAttribute()
+    {
+        switch ($this->status) {
+            case 'Pending':
+                return 'orange';
+
+            default:
+                return 'green';
+        }
+    }
 }

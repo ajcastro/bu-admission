@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ApplicationResource\Pages;
-use App\Filament\Resources\ApplicationResource\RelationManagers;
 use App\Models\Application;
 use App\Services\Countries;
 use Filament\Forms;
@@ -13,6 +12,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Support\HtmlString;
 
 class ApplicationResource extends Resource
 {
@@ -42,16 +42,16 @@ class ApplicationResource extends Resource
                     ->columnSpan(2),
 
                 Forms\Components\Card::make()
-                    ->schema([])
+                    ->schema([
+                        Forms\Components\Placeholder::make('status')
+                            ->content(fn (Application $record)
+                            => new HtmlString("<span style='color: {$record->status_color}'> {$record->status} </span>")),
+                        Forms\Components\Placeholder::make('total_units')
+                            ->content(fn (Application $record) => $record->total_units),
+                    ])
                     ->columnSpan(1),
 
                 // Forms\Components\Group::make()->schema(static::applicantInformationFields()),
-
-                // Forms\Components\TextInput::make('status')
-                //     ->required()
-                //     ->maxLength(255),
-                // Forms\Components\TextInput::make('total_units')
-                //     ->required(),
             ])
             ->columns(3);
     }
