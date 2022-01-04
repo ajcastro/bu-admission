@@ -8,4 +8,11 @@ use Filament\Resources\Pages\ListRecords;
 class ListSubjects extends ListRecords
 {
     protected static string $resource = SubjectResource::class;
+
+    protected $queryString = [
+        'tableSortColumn',
+        'tableSortDirection',
+        'tableSearchQuery' => ['except' => ''],
+        'tableFilters',
+    ];
 }

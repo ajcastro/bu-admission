@@ -71,13 +71,15 @@ class ProgramResource extends Resource
                 //
             ])
             ->pushActions([
-                // LinkAction::make('view_subjects')
-                //     ->label('View Subjects')
-                //     ->url(fn (Program $record): string
-                //         => route('filament.resources.subjects.index', [
-                //             'program_id' => $record->id
-                //         ]) // how can I pass the filter for program?
-                //     )
+                LinkAction::make('view_subjects')
+                    ->label('View Subjects')
+                    ->url(function (Program $record): string {
+                        $params = ['tableFilters' => ['program' => [
+                            'values' => [ $record->id]
+                        ]]];
+
+                        return route('filament.resources.subjects.index', $params);
+                    })
             ]);
     }
 

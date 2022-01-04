@@ -30,4 +30,9 @@ class Program extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
 }

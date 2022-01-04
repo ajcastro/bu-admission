@@ -62,8 +62,7 @@ class SubjectResource extends Resource
             ])
             ->filters([
                 Tables\Filters\MultiSelectFilter::make('program')
-                    ->column('program_id')
-                    ->options(Program::pluck('label', 'id')),
+                    ->relationship('program', 'label'),
                 Tables\Filters\MultiSelectFilter::make('category')
                     ->options(\App\Enums\SubjectCategory::asSelectArray()),
             ]);
