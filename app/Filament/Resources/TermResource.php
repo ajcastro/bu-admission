@@ -41,6 +41,7 @@ class TermResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
+            ->defaultSort('label', 'desc')
             ->filters([
                 //
             ])
