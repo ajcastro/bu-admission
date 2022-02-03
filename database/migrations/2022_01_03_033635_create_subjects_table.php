@@ -21,6 +21,7 @@ class CreateSubjectsTable extends Migration
             $table->string('label');
             $table->decimal('units', 8, 2)->default(0);
             $table->string('professor');
+            $table->boolean('is_enabled')->default(1);
             $table->timestamps();
         });
     }

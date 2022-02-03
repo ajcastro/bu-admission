@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\LinkAction;
 use Illuminate\Database\Eloquent\Builder;
 
 class SubjectResource extends Resource
@@ -44,6 +45,7 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('professor')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Checkbox::make('is_enabled'),
             ]);
     }
 
@@ -57,6 +59,11 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('label')->label('Title')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('units')->sortable(),
                 Tables\Columns\TextColumn::make('professor')->searchable()->sortable(),
+                Tables\Columns\BooleanColumn::make('is_enabled')
+                    ->label('Enabled')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable(),
             ])
@@ -65,6 +72,30 @@ class SubjectResource extends Resource
                     ->relationship('program', 'label'),
                 Tables\Filters\MultiSelectFilter::make('category')
                     ->options(\App\Enums\SubjectCategory::asSelectArray()),
+            ])
+            ->pushActions([
+                LinkAction::make('enable')
+                    ->label('Enable')
+                    ->action(function (Subject $record) {
+                        $record->is_enabled = true;
+                        $record->save();
+                    })
+                    ->requiresConfirmation()
+                    ->hidden(function (Subject $record) {
+                        return $record->is_enabled;
+                    })
+                    ->modalSubheading("Are you sure to enable this subject?"),
+                LinkAction::make('disable')
+                    ->label('Disable')
+                    ->action(function (Subject $record) {
+                        $record->is_enabled = false;
+                        $record->save();
+                    })
+                    ->requiresConfirmation()
+                    ->hidden(function (Subject $record) {
+                        return !$record->is_enabled;
+                    })
+                    ->modalSubheading("Are you sure to disable this subject?"),
             ]);
     }
 

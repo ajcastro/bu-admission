@@ -21,6 +21,7 @@ class Subject extends Model
         'label',
         'units',
         'professor',
+        'is_enabled',
     ];
 
     /**
@@ -31,6 +32,7 @@ class Subject extends Model
     protected $casts = [
         'id' => 'integer',
         'units' => 'decimal:2',
+        'is_enabled' => 'boolean',
     ];
 
     public function program()
