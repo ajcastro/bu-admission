@@ -71,6 +71,11 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
     public function getApplicantNameAttribute()
     {
         if (blank($this->middle_name)) {

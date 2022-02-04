@@ -161,14 +161,16 @@ class ApplicationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('applicant_name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('total_units'),
+                Tables\Columns\TextColumn::make('applicant_name')->label('Applicant Name')->sortable(['first_name', 'last_name'])->searchable(['first_name', 'last_name']),
+                Tables\Columns\TextColumn::make('program.label')->label('Program')->sortable(),
+                Tables\Columns\TextColumn::make('status')->sortable(),
+                Tables\Columns\TextColumn::make('total_units')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i a'),
+                    ->dateTime('M j, Y h:i a')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i a'),
+                    ->dateTime('M j, Y h:i a')
+                    ->sortable(),
             ])
             ->filters([
                 //

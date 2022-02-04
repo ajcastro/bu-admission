@@ -16,6 +16,7 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('program_id');
             $table->string('last_name')->default('');
             $table->string('first_name')->default('');
             $table->string('middle_name')->default('');
