@@ -112,4 +112,13 @@ class Application extends Model
     {
         return $this->subjects()->sum('application_subject.units');
     }
+
+    public function getFeesTabulation()
+    {
+        return [
+            'Unit Fees' => $this->getTotalUnits() * 450,
+            'Miscellaneous Fee' => 100,
+            'DLF' => 1500,
+        ];
+    }
 }

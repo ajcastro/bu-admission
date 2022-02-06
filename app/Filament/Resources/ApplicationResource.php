@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Models\Application;
 use App\Models\Subject;
@@ -45,7 +46,9 @@ class ApplicationResource extends Resource
                                     ->imagePreviewHeight('250')
                             ]),
                         Tabs\Tab::make('Subject Selection')
-                            ->schema(static::subjectSelectionFields())
+                            ->schema(static::subjectSelectionFields()),
+                        Tabs\Tab::make('Fees')
+                            ->schema(static::feesFields()),
                     ])
                     ->columnSpan(2),
 
@@ -58,8 +61,6 @@ class ApplicationResource extends Resource
                             ->content(fn (Application $record) => number_format($record->getTotalUnits(), 2)),
                     ])
                     ->columnSpan(1),
-
-                // Forms\Components\Group::make()->schema(static::applicantInformationFields()),
             ])
             ->columns(3);
     }
@@ -200,6 +201,15 @@ class ApplicationResource extends Resource
                         };
                     }
                 ])
+        ];
+    }
+
+    public static function feesFields()
+    {
+        return [
+            FeesTable::make('fees')->label('')->setFees(function (Application $record) {
+                return $record->getFeesTabulation();
+            }),
         ];
     }
 
