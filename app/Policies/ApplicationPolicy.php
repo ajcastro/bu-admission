@@ -53,7 +53,7 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application)
     {
-        return true;
+        return $user->id === $application->user_id;
     }
 
     /**
