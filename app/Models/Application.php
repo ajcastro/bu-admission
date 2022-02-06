@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ApplicationStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,6 +66,19 @@ class Application extends Model
         static::creating(function (Application $application) {
             $application->user_id = auth()->user()->id ?? null;
         });
+
+        static::saving(function (Application $application) {
+            $application->total_units = $application->getTotalUnits();
+        });
+    }
+
+    public static function getFeesTabulation(?Application $application)
+    {
+        return [
+            'Unit Fees' => optional($application)->getTotalUnits() * 450,
+            'Miscellaneous Fee' => 100,
+            'DLF' => 1500,
+        ];
     }
 
     public function user()
@@ -81,6 +95,11 @@ class Application extends Model
     {
         return $this->belongsToMany(Subject::class)
             ->withPivot(['units']);
+    }
+
+    public function approvers()
+    {
+        return $this->hasMany(Approver::class);
     }
 
     public function getApplicantNameAttribute()
@@ -100,11 +119,19 @@ class Application extends Model
     public function getStatusColorAttribute()
     {
         switch ($this->status) {
-            case 'Pending':
+            case ApplicationStatus::PENDING:
                 return 'orange';
 
+            case ApplicationStatus::REJECTED:
+                return 'red';
+
+            case ApplicationStatus::RECOMMENDED:
+            case ApplicationStatus::ADMITTED:
+            case ApplicationStatus::PROCESSED:
+                return 'success';
+
             default:
-                return 'green';
+                return 'default';
         }
     }
 
@@ -113,12 +140,74 @@ class Application extends Model
         return $this->subjects()->sum('application_subject.units');
     }
 
-    public function getFeesTabulation()
+    public function getCurrentApprover(): ?Approver
     {
-        return [
-            'Unit Fees' => $this->getTotalUnits() * 450,
-            'Miscellaneous Fee' => 100,
-            'DLF' => 1500,
-        ];
+        return $this->approvers()
+            ->noActionYet()
+            ->first();
+    }
+
+    public function getLastApprover(): ?Approver
+    {
+        return $this->approvers()
+            ->hadActionTaken()
+            ->orderByRaw('IFNULL(approved_at, rejected_at) desc')
+            ->first();
+    }
+
+    public function findApprover(User $user): Approver
+    {
+        return $this->approvers()->where('user_id', $user->id)->first();
+    }
+
+    public function findPreviousApprover(): ?Approver
+    {
+        return $this->approvers()
+            ->hadActionTaken()
+            ->orderByRaw('IFNULL(approved_at, rejected_at) desc')
+            ->first();
+    }
+
+    public function approve(Approver $approver)
+    {
+        if ($approver->user->cannot('approve', $this)) {
+            abort(403);
+        }
+
+        $approver->approved_at = now();
+        $approver->save();
+        $this->status = $approver->getApplicationStatus();
+        $this->save();
+    }
+
+    public function reject(Approver $approver)
+    {
+        if ($approver->user->cannot('approve', $this)) {
+            abort(403);
+        }
+
+        $approver->rejected_at = now();
+        $approver->save();
+        $this->status = ApplicationStatus::REJECTED;
+        $this->save();
+    }
+
+    public function undoApproval(Approver $approver)
+    {
+        if ($approver->user->cannot('undoApproval', $this)) {
+            abort(403);
+        }
+
+        $approver->approved_at = null;
+        $approver->rejected_at = null;
+        $approver->save();
+
+        $prevApprover = $this->findPreviousApprover();
+
+        $this->status = is_null($prevApprover)
+            ? ApplicationStatus::PENDING
+            : $prevApprover->getApplicationStatus();
+
+        $this->save();
     }
 }

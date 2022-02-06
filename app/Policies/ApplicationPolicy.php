@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\ApplicationStatus;
+use App\Enums\UserRole;
 use App\Models\Application;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -9,6 +11,21 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class ApplicationPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user, $ability)
+    {
+        if ($user->isAdministrator()) {
+            return true;
+        }
+    }
+
 
     /**
      * Determine whether the user can view any models.
@@ -41,7 +58,7 @@ class ApplicationPolicy
      */
     public function create(User $user)
     {
-        return $user->applications()->count() === 0;
+        return $user->role === UserRole::Applicant && $user->applications()->count() === 0;
     }
 
     /**
@@ -53,7 +70,8 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application)
     {
-        return $user->id === $application->user_id;
+        return $application->status === ApplicationStatus::PENDING
+            && $user->id === $application->user_id;
     }
 
     /**
@@ -90,5 +108,30 @@ class ApplicationPolicy
     public function forceDelete(User $user, Application $application)
     {
         return false;
+    }
+
+    /**
+     * Check if can approve an application.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Application  $application
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function approve(User $user, Application $application)
+    {
+        return $application->status !== ApplicationStatus::REJECTED
+            && $user->id === ($application->getCurrentApprover()->user_id ?? null);
+    }
+
+    /**
+     * Check if can undo approval of an application.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Application  $application
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function undoApproval(User $user, Application $application)
+    {
+        return $user->id === ($application->getLastApprover()->user_id ?? null);
     }
 }

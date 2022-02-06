@@ -55,10 +55,15 @@ class ApplicationResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Placeholder::make('status')
-                            ->content(fn (Application $record)
-                            => new HtmlString("<span style='color: {$record->status_color}'> {$record->status} </span>")),
+                            ->content(function (?Application $record = null) {
+                                $record = $record ?? new Application;
+                                return new HtmlString("<span style='color: {$record->status_color}'> {$record->status} </span>");
+                            }),
                         Forms\Components\Placeholder::make('total_units')
-                            ->content(fn (Application $record) => number_format($record->getTotalUnits(), 2)),
+                            ->content(function (?Application $record = null) {
+                                $record = $record ?? new Application;
+                                return number_format($record->getTotalUnits(), 2);
+                            }),
                     ])
                     ->columnSpan(1),
             ])
@@ -207,8 +212,8 @@ class ApplicationResource extends Resource
     public static function feesFields()
     {
         return [
-            FeesTable::make('fees')->label('')->setFees(function (Application $record) {
-                return $record->getFeesTabulation();
+            FeesTable::make('fees')->label('')->setFees(function (?Application $record = null) {
+                return Application::getFeesTabulation($record);
             }),
         ];
     }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ApproverAction;
+use App\Enums\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,5 +48,19 @@ class User extends Authenticatable
     public function applications()
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function isAdministrator()
+    {
+        return $this->role === UserRole::Admin;
+    }
+
+    public function getApproverAction()
+    {
+        return ([
+            UserRole::ProgramAdviser => ApproverAction::RECOMMEND,
+            UserRole::Dean => ApproverAction::ADMIT,
+            UserRole::Registrar => ApproverAction::PROCESS,
+        ])[$this->role] ?? null;
     }
 }
