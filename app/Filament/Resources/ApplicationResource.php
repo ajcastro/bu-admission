@@ -18,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 
@@ -174,11 +175,17 @@ class ApplicationResource extends Resource
                 ->searchable()
                 ->reactive(),
             BelongsToManyCheckboxList::make('subjects')
-                ->relationship('subjects', function () {
-                    return 'label';
-                    return DB::raw('CONCAT(label, ", ", units, ", ", professor) as label');
-                }, function (Builder $query, callable $get) {
-                    return Subject::where('program_id', $get('program_id'));
+                ->relationship('subjects', 'label')
+                ->options(function (callable $get) {
+                    /** @var Collection */ $subjects = Subject::where('program_id', $get('program_id'))->get();
+                    return $subjects->keyBy('id')->map(function ($subject) {
+                        return "{$subject->label} ({$subject->code}), {$subject->units} units, {$subject->professor}";
+                    });
+                })
+                ->saveRelationshipsUsing(function (BelongsToManyCheckboxList $component, ?array $state) {
+                    /** @var Collection */ $subjects = Subject::find(collect()->wrap($state), ['id', 'units']);
+                    $newState = $subjects->mapWithKeys(fn ($subject) => [$subject->id => ['units' => $subject->units]]);
+                    $component->getRelationship()->sync($newState);
                 })
                 ->reactive()
                 ->required()
