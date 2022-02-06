@@ -4,14 +4,21 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Models\Application;
+use App\Models\Subject;
 use App\Services\Countries;
+use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\BelongsToManyCheckboxList;
+use Filament\Forms\Components\BelongsToManyMultiSelect;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Tabs;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 
 class ApplicationResource extends Resource
@@ -37,7 +44,7 @@ class ApplicationResource extends Resource
                                     ->imagePreviewHeight('250')
                             ]),
                         Tabs\Tab::make('Subject Selection')
-                            ->schema([])
+                            ->schema(static::subjectSelectionFields())
                     ])
                     ->columnSpan(2),
 
@@ -47,7 +54,7 @@ class ApplicationResource extends Resource
                             ->content(fn (Application $record)
                             => new HtmlString("<span style='color: {$record->status_color}'> {$record->status} </span>")),
                         Forms\Components\Placeholder::make('total_units')
-                            ->content(fn (Application $record) => $record->total_units),
+                            ->content(fn (Application $record) => number_format($record->getTotalUnits(), 2)),
                     ])
                     ->columnSpan(1),
 
@@ -154,6 +161,38 @@ class ApplicationResource extends Resource
                         ->options(Countries::asSelectOptions())
                         ->searchable(),
                 ]),
+        ];
+    }
+
+    public static function subjectSelectionFields()
+    {
+        return [
+            Forms\Components\Select::make('program_id')
+                ->label('Program')
+                ->required()
+                ->options(\App\Models\Program::pluck('label', 'id'))
+                ->searchable()
+                ->reactive(),
+            BelongsToManyCheckboxList::make('subjects')
+                ->relationship('subjects', function () {
+                    return 'label';
+                    return DB::raw('CONCAT(label, ", ", units, ", ", professor) as label');
+                }, function (Builder $query, callable $get) {
+                    return Subject::where('program_id', $get('program_id'));
+                })
+                ->reactive()
+                ->required()
+                ->rules([
+                    function (callable $get) {
+                        return function (string $attribute, $value, Closure $fail) use ($get) {
+                            $subjects = Subject::find(collect()->wrap($get('subjects')), ['id', 'units']);
+                            $max = Subject::MAX_UNITS;
+                            if ($subjects->sum('units') > $max) {
+                                $fail("The maximum units can be taken is {$max}.");
+                            }
+                        };
+                    }
+                ])
         ];
     }
 

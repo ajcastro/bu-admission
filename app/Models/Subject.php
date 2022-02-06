@@ -9,6 +9,8 @@ class Subject extends Model
 {
     use HasFactory;
 
+    const MAX_UNITS = 12;
+
     /**
      * The attributes that are mass assignable.
      *

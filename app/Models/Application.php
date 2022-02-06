@@ -17,6 +17,7 @@ class Application extends Model
      */
     protected $fillable = [
         'user_id',
+        'program_id',
         'last_name',
         'first_name',
         'middle_name',
@@ -76,6 +77,12 @@ class Application extends Model
         return $this->belongsTo(Program::class);
     }
 
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class)
+            ->withPivot(['units']);
+    }
+
     public function getApplicantNameAttribute()
     {
         if (blank($this->middle_name)) {
@@ -99,5 +106,10 @@ class Application extends Model
             default:
                 return 'green';
         }
+    }
+
+    public function getTotalUnits()
+    {
+        return $this->subjects()->sum('application_subject.units');
     }
 }
