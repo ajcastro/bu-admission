@@ -188,7 +188,7 @@ class ApplicationResource extends Resource
                             $subjects = Subject::find(collect()->wrap($get('subjects')), ['id', 'units']);
                             $max = Subject::MAX_UNITS;
                             if ($subjects->sum('units') > $max) {
-                                $fail("The maximum units can be taken is {$max}.");
+                                $fail("The maximum units can be taken is {$max} units only.");
                             }
                         };
                     }
