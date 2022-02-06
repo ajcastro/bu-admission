@@ -35,14 +35,14 @@ class ViewApplication extends ViewRecord
         $approver = $this->record->getCurrentApprover();
 
         return ButtonAction::make('approve')
-            ->label($approver->action_display)
+            ->label($approver->action_display ?? '')
             ->icon('heroicon-s-check')
             ->color('success')
             ->action(function () {
                 $this->record->approve($this->record->findApprover(auth()->user()));
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
-            ->hidden($user->cant('approve', $this->record))
+            ->hidden(is_null($approver) || $user->cant('approve', $this->record))
             ->requiresConfirmation()
             ;
     }
