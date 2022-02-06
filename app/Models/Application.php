@@ -128,7 +128,7 @@ class Application extends Model
             case ApplicationStatus::RECOMMENDED:
             case ApplicationStatus::ADMITTED:
             case ApplicationStatus::PROCESSED:
-                return 'success';
+                return 'green';
 
             default:
                 return 'default';
