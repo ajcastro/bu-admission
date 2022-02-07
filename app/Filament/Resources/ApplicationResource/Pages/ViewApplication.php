@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ApplicationResource\Pages;
 
 use App\Enums\ApplicationStatus;
+use App\Enums\UserRole;
 use App\Filament\Resources\ApplicationResource;
 use App\Models\Application;
 use Filament\Pages\Actions\ButtonAction;
@@ -11,6 +12,8 @@ use Illuminate\Support\Arr;
 
 class ViewApplication extends ViewRecord
 {
+    use Traits\HasViewAuditButton;
+
     protected static string $resource = ApplicationResource::class;
 
     /** @var \App\Models\Application */
@@ -19,6 +22,9 @@ class ViewApplication extends ViewRecord
     protected function getActions(): array
     {
         return array_filter(array_merge(
+            [
+                $this->getViewAuditButton(),
+            ],
             parent::getActions(),
             [
                 $this->getApproveButton(),

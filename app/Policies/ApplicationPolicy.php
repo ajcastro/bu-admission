@@ -134,4 +134,16 @@ class ApplicationPolicy
     {
         return $user->id === ($application->getLastApprover()->user_id ?? null);
     }
+
+    /**
+     * Check if can view audit of application.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Application  $application
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewAudit(User $user, Application $application)
+    {
+        return $user->role !== UserRole::Applicant;
+    }
 }

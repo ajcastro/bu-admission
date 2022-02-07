@@ -19,6 +19,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\LinkAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -242,6 +243,18 @@ class ApplicationResource extends Resource
             ])
             ->filters([
                 //
+            ])
+            ->prependActions([
+                LinkAction::make('view_audit')
+                    ->label('View Audit')
+                    ->url(function (Application $record) {
+                        return url(route('filament.resources.applications.audit', $record));
+                    })
+                    ->hidden(function (Application $record) {
+                        /** @var User */
+                        $user = auth()->user();
+                        return $user->cant('viewAudit', $record);
+                    }),
             ]);
     }
 
@@ -259,6 +272,7 @@ class ApplicationResource extends Resource
             'create' => Pages\CreateApplication::route('/create'),
             'edit' => Pages\EditApplication::route('/{record}/edit'),
             'view' => Pages\ViewApplication::route('/{record}'),
+            'audit' => Pages\ViewApplicationAudit::route('/{record}/audit'),
         ];
     }
 }
