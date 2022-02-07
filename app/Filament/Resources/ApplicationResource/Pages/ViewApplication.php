@@ -39,7 +39,7 @@ class ViewApplication extends ViewRecord
             ->icon('heroicon-s-check')
             ->color('success')
             ->action(function () {
-                $this->record->approve($this->record->findApprover(auth()->user()));
+                $this->record->approve($this->record->getCurrentApprover());
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(is_null($approver) || $user->cant('approve', $this->record))
@@ -58,7 +58,7 @@ class ViewApplication extends ViewRecord
             ->icon('heroicon-s-ban')
             ->color('danger')
             ->action(function () {
-                $this->record->reject($this->record->findApprover(auth()->user()));
+                $this->record->reject($this->record->getCurrentApprover());
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(
@@ -78,7 +78,7 @@ class ViewApplication extends ViewRecord
             ->label('Undo')
             ->icon('heroicon-s-backspace')
             ->action(function () {
-                $this->record->undoApproval($this->record->findApprover(auth()->user()));
+                $this->record->undoApproval($this->record->getLastApprover());
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(
