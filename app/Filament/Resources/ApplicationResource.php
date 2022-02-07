@@ -193,7 +193,6 @@ class ApplicationResource extends Resource
                     $newState = $subjects->mapWithKeys(fn ($subject) => [$subject->id => ['units' => $subject->units]]);
                     $component->getRelationship()->sync($newState);
                 })
-                ->reactive()
                 ->required()
                 ->rules([
                     function (callable $get) {
