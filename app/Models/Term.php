@@ -27,4 +27,9 @@ class Term extends Model
         'id' => 'integer',
         'is_active' => 'boolean',
     ];
+
+    public static function getActive()
+    {
+        return static::where('is_active', 1)->first();
+    }
 }

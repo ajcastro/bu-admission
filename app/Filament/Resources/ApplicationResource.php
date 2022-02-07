@@ -6,6 +6,7 @@ use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Models\Application;
 use App\Models\Subject;
+use App\Models\Term;
 use App\Services\Countries;
 use Closure;
 use Filament\Forms;
@@ -58,6 +59,12 @@ class ApplicationResource extends Resource
                             ->content(function (?Application $record = null) {
                                 $record = $record ?? new Application;
                                 return new HtmlString("<span style='color: {$record->status_color}'> {$record->status} </span>");
+                            }),
+                        Forms\Components\Placeholder::make('term')
+                            ->content(function (?Application $record = null) {
+                                return $record
+                                    ? $record->term->label
+                                    : Term::getActive()->label;
                             }),
                         Forms\Components\Placeholder::make('total_units')
                             ->content(function (?Application $record = null) {
@@ -223,6 +230,7 @@ class ApplicationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('applicant_name')->label('Applicant Name')->sortable(['first_name', 'last_name'])->searchable(['first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('program.label')->label('Program')->sortable(),
+                Tables\Columns\TextColumn::make('term.label')->label('Term')->sortable(),
                 Tables\Columns\TextColumn::make('status')->sortable(),
                 Tables\Columns\TextColumn::make('total_units')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -19,6 +19,7 @@ class Application extends Model
     protected $fillable = [
         'user_id',
         'program_id',
+        'term_id',
         'last_name',
         'first_name',
         'middle_name',
@@ -65,6 +66,7 @@ class Application extends Model
     {
         static::creating(function (Application $application) {
             $application->user_id = auth()->user()->id ?? null;
+            $application->term_id = Term::getActive()->id;
         });
 
         static::saving(function (Application $application) {
@@ -89,6 +91,11 @@ class Application extends Model
     public function program()
     {
         return $this->belongsTo(Program::class);
+    }
+
+    public function term()
+    {
+        return $this->belongsTo(Term::class);
     }
 
     public function subjects()
