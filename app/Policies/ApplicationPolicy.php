@@ -58,7 +58,7 @@ class ApplicationPolicy
      */
     public function create(User $user)
     {
-        return $user->role === UserRole::Applicant && $user->applications()->count() === 0;
+        return $user->role === UserRole::Applicant && $user->applications()->count() === 0 && $user->hasVerifiedEmail();
     }
 
     /**
@@ -144,6 +144,6 @@ class ApplicationPolicy
      */
     public function viewAudit(User $user, Application $application)
     {
-        return $user->role !== UserRole::Applicant;
+        return $user->id === $application->user_id || $user->role !== UserRole::Applicant;
     }
 }

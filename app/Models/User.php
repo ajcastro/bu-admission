@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,6 +21,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
         'role',
         'password',
@@ -45,6 +48,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function booted()
+    {
+        static::saving(function (User $user) {
+            $user->name = $user->name ?: $user->getFullNameAttribute();
+        });
+    }
+
     public function applications()
     {
         return $this->hasMany(Application::class);
@@ -62,5 +72,12 @@ class User extends Authenticatable
             UserRole::Dean => ApproverAction::ADMIT,
             UserRole::Registrar => ApproverAction::PROCESS,
         ])[$this->role] ?? null;
+    }
+
+    public function getFullNameAttribute()
+    {
+        if ($this->first_name || $this->last_name) {
+            return "{$this->first_name} {$this->last_name}";
+        }
     }
 }

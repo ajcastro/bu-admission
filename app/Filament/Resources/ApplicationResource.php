@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Models\Application;
@@ -85,12 +86,27 @@ class ApplicationResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('last_name')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->last_name;
+                            }
+                        }),
                     Forms\Components\TextInput::make('first_name')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->first_name;
+                            }
+                        }),
                     Forms\Components\TextInput::make('middle_name')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->middle_name;
+                            }
+                        }),
                     Forms\Components\DatePicker::make('birthdate')
                         ->required(),
                     Forms\Components\Select::make('gender')

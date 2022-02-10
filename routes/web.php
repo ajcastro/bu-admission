@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,3 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::domain(config("filament.domain"))
+    ->middleware(config("filament.middleware.base"))
+    ->prefix(config("filament.path"))
+    ->group(function () {
+        Route::get("/register", Register::class)->name("register");
+    });

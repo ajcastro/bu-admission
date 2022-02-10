@@ -67,7 +67,7 @@ class Application extends Model implements Auditable
     public static function booted()
     {
         static::creating(function (Application $application) {
-            $application->user_id = auth()->user()->id ?? null;
+            $application->user_id = $application->user_id ?? auth()->user()->id ?? null;
             $application->term_id = Term::getActive()->id;
         });
 
