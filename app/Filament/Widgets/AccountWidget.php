@@ -4,11 +4,11 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\Widget;
 
-class ActiveTermDisplay extends Widget
+class AccountWidget extends Widget
 {
-    protected static string $view = 'filament.widgets.active-term-display';
+    protected static ?int $sort = 1;
 
-    protected static ?int $sort = 2;
+    protected static string $view = 'filament::widgets.account-widget';
 
     public static function canView(): bool
     {
