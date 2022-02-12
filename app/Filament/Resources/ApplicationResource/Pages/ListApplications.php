@@ -10,6 +10,13 @@ class ListApplications extends ListRecords
 {
     protected static string $resource = ApplicationResource::class;
 
+    protected $queryString = [
+        'tableSortColumn',
+        'tableSortDirection',
+        'tableSearchQuery' => ['except' => ''],
+        'tableFilters',
+    ];
+
     protected function getHeaderWidgets(): array
     {
         return [
