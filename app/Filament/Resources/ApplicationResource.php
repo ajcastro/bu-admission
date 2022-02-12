@@ -61,7 +61,7 @@ class ApplicationResource extends Resource
                         Forms\Components\Placeholder::make('application_id')
                             ->label('Application ID')
                             ->content(function (?Application $record = null) {
-                                 return $record->id;
+                                 return $record->id ?? '';
                             }),
                         Forms\Components\Placeholder::make('status')
                             ->content(function (?Application $record = null) {
