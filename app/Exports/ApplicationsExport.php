@@ -48,10 +48,13 @@ class ApplicationsExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Permanent Zip Code',
             'Permanent Country',
 
-            'Program',
             'Term',
             'Status',
+
+            'Program',
             'Total Units',
+            'Subjects',
+
             'Created At',
             'Last Updated At',
 
@@ -100,10 +103,15 @@ class ApplicationsExport implements FromCollection, WithHeadings, ShouldAutoSize
                 'permanent_zip_code' => $item->permanent_zip_code,
                 'permanent_country' => $item->permanent_country,
 
-                'program' => $item->program->label,
                 'term' => $item->term->label,
                 'status' => $item->status,
+
+                'program' => $item->program->label,
                 'total_units' => $item->total_units,
+                'subjects' => $item->subjects->map(function ($subject) {
+                    return "{$subject->label}({$subject->code})";
+                })->implode(', '),
+
                 'created_at' => $item->created_at->format(static::DATETIME_FORMAT),
                 'updated_at' => $item->updated_at->format(static::DATETIME_FORMAT),
 

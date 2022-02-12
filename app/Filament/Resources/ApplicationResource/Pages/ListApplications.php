@@ -56,7 +56,7 @@ class ListApplications extends ListRecords
     public function getExportRecords()
     {
         $query = $this->getFilteredTableQuery();
-        $query->with('approvers.user');
+        $query->with(['approvers.user', 'subjects:id,label,code']);
         $this->applySortingToTableQuery($query);
 
         return $query->get();
