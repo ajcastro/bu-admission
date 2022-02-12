@@ -56,12 +56,12 @@ class ApplicationsExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Last Updated At',
 
             'Program Adviser',
-            'Endorsed?',
-            'Endorsed/Rejected At',
+            'Recommended?',
+            'Recommended/Rejected At',
 
             'Dean',
-            'Admitted?',
-            'Admitted/Rejected At',
+            'Approved?',
+            'Approved/Rejected At',
 
             'Registrar',
             'Processed At',
@@ -108,8 +108,8 @@ class ApplicationsExport implements FromCollection, WithHeadings, ShouldAutoSize
                 'updated_at' => $item->updated_at->format(static::DATETIME_FORMAT),
 
                 'program_adviser' => ($approver = $item->getApproverByAction(ApproverAction::RECOMMEND))->user->name,
-                'endorsed' => $approver->approved_at
-                    ? 'ENDORSED'
+                'recommend' => $approver->approved_at
+                    ? 'RECOMMENDED'
                     : ($approver->rejected_at
                         ? 'REJECTED'
                         : ''),
@@ -119,8 +119,8 @@ class ApplicationsExport implements FromCollection, WithHeadings, ShouldAutoSize
                 // 'endorse_rejected_at' => optional($approver->rejected_at)->format(static::DATETIME_FORMAT),
 
                 'dean' => ($approver = $item->getApproverByAction(ApproverAction::ADMIT))->user->name,
-                'admitted' => $approver->approved_at
-                    ? 'ADMITTED'
+                'approved' => $approver->approved_at
+                    ? 'APPROVED'
                     : ($approver->rejected_at
                         ? 'REJECTED'
                         : ''),
