@@ -20,7 +20,7 @@ class ApplicationTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_CreateApplicationApprovers_job()
     {
         Program::importFromJson(database_path('seeders/data/programs.json'));
         User::importFromJson(database_path('seeders/data/users.json'));
