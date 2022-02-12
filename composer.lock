@@ -319,12 +319,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "BladeUI\\Icons\\": "src"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "BladeUI\\Icons\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -898,16 +898,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.9.19",
+            "version": "v2.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "7227b5a26571018a35a334569b67a8b1c6ab791c"
+                "reference": "a68c00877cfb9a887fba39fea7a37a11b2d967be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/7227b5a26571018a35a334569b67a8b1c6ab791c",
-                "reference": "7227b5a26571018a35a334569b67a8b1c6ab791c",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/a68c00877cfb9a887fba39fea7a37a11b2d967be",
+                "reference": "a68c00877cfb9a887fba39fea7a37a11b2d967be",
                 "shasum": ""
             },
             "require": {
@@ -954,20 +954,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-04T07:20:41+00:00"
+            "time": "2022-02-11T21:12:18+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.9.19",
+            "version": "v2.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "22eee0bf6b368bf14ffb67558e4555b60703116f"
+                "reference": "e45fe270042497f9c36d17db295d7952c16a036a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/22eee0bf6b368bf14ffb67558e4555b60703116f",
-                "reference": "22eee0bf6b368bf14ffb67558e4555b60703116f",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/e45fe270042497f9c36d17db295d7952c16a036a",
+                "reference": "e45fe270042497f9c36d17db295d7952c16a036a",
                 "shasum": ""
             },
             "require": {
@@ -1010,20 +1010,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-04T07:20:34+00:00"
+            "time": "2022-02-11T21:12:10+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.9.19",
+            "version": "v2.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "bb9a3caafa93e6d318e79fc83f6622080d961eaf"
+                "reference": "0435db4c70238bd1ed167018b11e8cd965efa6ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/bb9a3caafa93e6d318e79fc83f6622080d961eaf",
-                "reference": "bb9a3caafa93e6d318e79fc83f6622080d961eaf",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/0435db4c70238bd1ed167018b11e8cd965efa6ed",
+                "reference": "0435db4c70238bd1ed167018b11e8cd965efa6ed",
                 "shasum": ""
             },
             "require": {
@@ -1063,7 +1063,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-03T10:48:30+00:00"
+            "time": "2022-02-11T21:12:09+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -1582,16 +1582,16 @@
         },
         {
             "name": "jeffgreco13/filament-breezy",
-            "version": "v1.1.1",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeffgreco13/filament-breezy.git",
-                "reference": "5079a85ed742e287609864cc9e6a73134e853b0a"
+                "reference": "929e9dd6c5bfdce37848b6a2618ab4b08fc4709b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeffgreco13/filament-breezy/zipball/5079a85ed742e287609864cc9e6a73134e853b0a",
-                "reference": "5079a85ed742e287609864cc9e6a73134e853b0a",
+                "url": "https://api.github.com/repos/jeffgreco13/filament-breezy/zipball/929e9dd6c5bfdce37848b6a2618ab4b08fc4709b",
+                "reference": "929e9dd6c5bfdce37848b6a2618ab4b08fc4709b",
                 "shasum": ""
             },
             "require": {
@@ -1649,7 +1649,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jeffgreco13/filament-breezy/issues",
-                "source": "https://github.com/jeffgreco13/filament-breezy/tree/v1.1.1"
+                "source": "https://github.com/jeffgreco13/filament-breezy/tree/v1.1.3"
             },
             "funding": [
                 {
@@ -1657,7 +1657,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-09T18:57:15+00:00"
+            "time": "2022-02-11T23:00:53+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -1727,16 +1727,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.82.0",
+            "version": "v8.83.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "411d5243c58cbf12b0fc89cab1ceb50088968c27"
+                "reference": "29bc8779103909ebc428478b339ee6fa8703e193"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/411d5243c58cbf12b0fc89cab1ceb50088968c27",
-                "reference": "411d5243c58cbf12b0fc89cab1ceb50088968c27",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/29bc8779103909ebc428478b339ee6fa8703e193",
+                "reference": "29bc8779103909ebc428478b339ee6fa8703e193",
                 "shasum": ""
             },
             "require": {
@@ -1896,7 +1896,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-02-01T16:13:57+00:00"
+            "time": "2022-02-08T15:44:51+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2494,16 +2494,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.10.1",
+            "version": "v2.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "0d417b27791af09c79108eafd1344842f83a26ee"
+                "reference": "2c4c29dc26b9bf248543ef05c1f820186184baa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/0d417b27791af09c79108eafd1344842f83a26ee",
-                "reference": "0d417b27791af09c79108eafd1344842f83a26ee",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/2c4c29dc26b9bf248543ef05c1f820186184baa1",
+                "reference": "2c4c29dc26b9bf248543ef05c1f820186184baa1",
                 "shasum": ""
             },
             "require": {
@@ -2555,7 +2555,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.10.1"
+                "source": "https://github.com/livewire/livewire/tree/v2.10.2"
             },
             "funding": [
                 {
@@ -2563,7 +2563,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-21T13:39:10+00:00"
+            "time": "2022-02-11T21:55:19+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6965,12 +6965,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Facade\\Ignition\\": "src"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "Facade\\Ignition\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -7236,16 +7236,16 @@
         },
         {
             "name": "laravel-shift/blueprint",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-shift/blueprint.git",
-                "reference": "b6ffc811e62b0ff25198ec97ce1451afbbba0746"
+                "reference": "b3877c973bf91a3fdf7363208fb068f879a946a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/blueprint/zipball/b6ffc811e62b0ff25198ec97ce1451afbbba0746",
-                "reference": "b6ffc811e62b0ff25198ec97ce1451afbbba0746",
+                "url": "https://api.github.com/repos/laravel-shift/blueprint/zipball/b3877c973bf91a3fdf7363208fb068f879a946a0",
+                "reference": "b3877c973bf91a3fdf7363208fb068f879a946a0",
                 "shasum": ""
             },
             "require": {
@@ -7288,9 +7288,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel-shift/blueprint/issues",
-                "source": "https://github.com/laravel-shift/blueprint/tree/v2.1.0"
+                "source": "https://github.com/laravel-shift/blueprint/tree/v2.2.0"
             },
-            "time": "2021-12-29T15:05:32+00:00"
+            "time": "2022-01-14T12:07:45+00:00"
         },
         {
             "name": "laravel-shift/faker-registry",
@@ -7334,16 +7334,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.13.1",
+            "version": "v1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "b9749028732eca8080c26d01cd88a2f3549c2e3e"
+                "reference": "ede5e861549be2c3a8b789cdb34203a5aef5b92a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/b9749028732eca8080c26d01cd88a2f3549c2e3e",
-                "reference": "b9749028732eca8080c26d01cd88a2f3549c2e3e",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/ede5e861549be2c3a8b789cdb34203a5aef5b92a",
+                "reference": "ede5e861549be2c3a8b789cdb34203a5aef5b92a",
                 "shasum": ""
             },
             "require": {
@@ -7390,7 +7390,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2022-01-20T15:31:25+00:00"
+            "time": "2022-02-08T14:14:12+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -7671,16 +7671,16 @@
         },
         {
             "name": "phar-io/version",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "bae7c545bef187884426f042434e561ab1ddb182"
+                "reference": "15a90844ad40f127afd244c0cad228de2a80052a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/bae7c545bef187884426f042434e561ab1ddb182",
-                "reference": "bae7c545bef187884426f042434e561ab1ddb182",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/15a90844ad40f127afd244c0cad228de2a80052a",
+                "reference": "15a90844ad40f127afd244c0cad228de2a80052a",
                 "shasum": ""
             },
             "require": {
@@ -7716,9 +7716,9 @@
             "description": "Library for handling version information and constraints",
             "support": {
                 "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.1.0"
+                "source": "https://github.com/phar-io/version/tree/3.1.1"
             },
-            "time": "2021-02-23T14:00:09+00:00"
+            "time": "2022-02-07T21:56:48+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -8327,11 +8327,11 @@
                 }
             },
             "autoload": {
-                "classmap": [
-                    "src/"
-                ],
                 "files": [
                     "src/Framework/Assert/Functions.php"
+                ],
+                "classmap": [
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -8923,16 +8923,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "5.0.3",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49"
+                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/23bd5951f7ff26f12d4e3242864df3e08dec4e49",
-                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
+                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
                 "shasum": ""
             },
             "require": {
@@ -8975,7 +8975,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/global-state/issues",
-                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.3"
+                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.4"
             },
             "funding": [
                 {
@@ -8983,7 +8983,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-11T13:31:12+00:00"
+            "time": "2022-02-10T07:01:19+00:00"
         },
         {
             "name": "sebastian/lines-of-code",
