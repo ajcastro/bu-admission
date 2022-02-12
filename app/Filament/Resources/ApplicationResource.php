@@ -92,6 +92,8 @@ class ApplicationResource extends Resource
             Forms\Components\Placeholder::make('recommending_approval')
                 ->label('Recommending Approval')
                 ->content(function (?Application $record = null) {
+                    if (!$record) return;
+
                     $approver = $record->getApproverByAction(ApproverAction::RECOMMEND);
                     return new HtmlString(collect([
                         $approver->user->name,
@@ -107,6 +109,8 @@ class ApplicationResource extends Resource
             Forms\Components\Placeholder::make('approval')
                 ->label('Approval')
                 ->content(function (?Application $record = null) {
+                    if (!$record) return;
+
                     $approver = $record->getApproverByAction(ApproverAction::ADMIT);
                     return new HtmlString(collect([
                         $approver->user->name,
@@ -122,6 +126,8 @@ class ApplicationResource extends Resource
             Forms\Components\Placeholder::make('processed by')
                 ->label('Processed by:')
                 ->content(function (?Application $record = null) {
+                    if (!$record) return;
+
                     $approver = $record->getApproverByAction(ApproverAction::PROCESS);
                     return new HtmlString(collect([
                         $approver->user->name,
