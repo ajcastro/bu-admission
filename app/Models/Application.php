@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\ApplicationStatus;
+use App\Enums\UserRole;
+use App\Jobs\CreateApplicationApprovers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -67,8 +69,12 @@ class Application extends Model implements Auditable
     public static function booted()
     {
         static::creating(function (Application $application) {
-            $application->user_id = auth()->user()->id ?? null;
-            $application->term_id = Term::getActive()->id;
+            $application->user_id = $application->user_id ?? auth()->user()->id ?? null;
+            $application->term_id = $application->term_id ?? Term::getActive()->id;
+        });
+
+        static::created(function (Application $application) {
+            dispatch(new CreateApplicationApprovers($application));
         });
 
         static::saving(function (Application $application) {
@@ -141,6 +147,27 @@ class Application extends Model implements Auditable
 
             default:
                 return 'default';
+        }
+    }
+
+    public function scopeAccessibleBy($query, ?User $user)
+    {
+        if (is_null($user) || $user->isAdministrator()) {
+            return;
+        }
+
+        if ($user->role === UserRole::Applicant) {
+            return $query->where('user_id', $user->id);
+        }
+
+        if (in_array($user->role, [
+            UserRole::ProgramAdviser,
+            UserRole::Dean,
+            UserRole::Registrar,
+        ])) {
+            return $query->whereHas('approvers', function ($query) use ($user) {
+                $query->where('approvers.user_id', $user->id);
+            });
         }
     }
 
@@ -218,5 +245,10 @@ class Application extends Model implements Auditable
             : $prevApprover->getApplicationStatus();
 
         $this->save();
+    }
+
+    public function getApproverByAction($action)
+    {
+        return $this->approvers->where('action', $action)->first() ?? optional();
     }
 }

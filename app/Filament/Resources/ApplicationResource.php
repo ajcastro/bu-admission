@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ApplicationStatus;
+use App\Enums\ApproverAction;
+use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Models\Application;
@@ -55,7 +58,12 @@ class ApplicationResource extends Resource
                     ->columnSpan(2),
 
                 Forms\Components\Card::make()
-                    ->schema([
+                    ->schema(array_merge([
+                        Forms\Components\Placeholder::make('application_id')
+                            ->label('Application ID')
+                            ->content(function (?Application $record = null) {
+                                return $record->id ?? '';
+                            }),
                         Forms\Components\Placeholder::make('status')
                             ->content(function (?Application $record = null) {
                                 $record = $record ?? new Application;
@@ -72,10 +80,66 @@ class ApplicationResource extends Resource
                                 $record = $record ?? new Application;
                                 return number_format($record->getTotalUnits(), 2);
                             }),
-                    ])
+                    ], static::getApproverFields()))
                     ->columnSpan(1),
             ])
             ->columns(3);
+    }
+
+    public static function getApproverFields()
+    {
+        return [
+            Forms\Components\Placeholder::make('recommending_approval')
+                ->label('Recommending Approval')
+                ->content(function (?Application $record = null) {
+                    if (!$record) return;
+
+                    $approver = $record->getApproverByAction(ApproverAction::RECOMMEND);
+                    return new HtmlString(collect([
+                        $approver->user->name,
+                        $approver->approved_at
+                            ? 'RECOMMENDED'
+                            : ($approver->rejected_at
+                                ? 'REJECTED'
+                                : ''),
+                        optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
+                    ])->implode('<br> '));
+                }),
+
+            Forms\Components\Placeholder::make('approval')
+                ->label('Approval')
+                ->content(function (?Application $record = null) {
+                    if (!$record) return;
+
+                    $approver = $record->getApproverByAction(ApproverAction::ADMIT);
+                    return new HtmlString(collect([
+                        $approver->user->name,
+                        $approver->approved_at
+                            ? 'APPROVED'
+                            : ($approver->rejected_at
+                                ? 'REJECTED'
+                                : ''),
+                        optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
+                    ])->implode('<br> '));
+                }),
+
+            Forms\Components\Placeholder::make('processed by')
+                ->label('Processed by:')
+                ->content(function (?Application $record = null) {
+                    if (!$record) return;
+
+                    $approver = $record->getApproverByAction(ApproverAction::PROCESS);
+                    return new HtmlString(collect([
+                        $approver->user->name,
+                        $approver->approved_at
+                            ? 'PROCESSED'
+                            : ($approver->rejected_at
+                                ? 'REJECTED'
+                                : ''),
+                        optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
+                    ])->implode('<br> '));
+                }),
+        ];
     }
 
     private static function applicantInformationFields()
@@ -85,12 +149,27 @@ class ApplicationResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('last_name')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->last_name;
+                            }
+                        }),
                     Forms\Components\TextInput::make('first_name')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->first_name;
+                            }
+                        }),
                     Forms\Components\TextInput::make('middle_name')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->middle_name;
+                            }
+                        }),
                     Forms\Components\DatePicker::make('birthdate')
                         ->required(),
                     Forms\Components\Select::make('gender')
@@ -229,6 +308,7 @@ class ApplicationResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')->label('Application ID')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('applicant_name')->label('Applicant Name')->sortable(['first_name', 'last_name'])->searchable(['first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('program.label')->label('Program')->sortable(),
                 Tables\Columns\TextColumn::make('term.label')->label('Term')->sortable(),
@@ -242,7 +322,12 @@ class ApplicationResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\MultiSelectFilter::make('program')
+                    ->relationship('program', 'label'),
+                Tables\Filters\MultiSelectFilter::make('term')
+                    ->relationship('term', 'label'),
+                Tables\Filters\MultiSelectFilter::make('status')
+                    ->options(ApplicationStatus::asSelectArray()),
             ])
             ->prependActions([
                 LinkAction::make('view_audit')
@@ -274,5 +359,10 @@ class ApplicationResource extends Resource
             'view' => Pages\ViewApplication::route('/{record}'),
             'audit' => Pages\ViewApplicationAudit::route('/{record}/audit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return static::getModel()::accessibleBy(auth()->user());
     }
 }

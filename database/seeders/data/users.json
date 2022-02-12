@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Arjon Jason Castro",
+    "first_name": null,
+    "middle_name": null,
+    "last_name": null,
+    "email": "admin@gmail.com",
+    "role": "Admin",
+    "email_verified_at": null,
+    "password": "$2y$10$9Aeq8Qn4c2g1mSVwzgJ3deGnT6KJzbHojbUFLK5M84QBV3o5a3xcm",
+    "remember_token": "9LmG6Eqotwzf2rNjvOEgcqpOI74Ve0ZZX30lr37ryKlE1cg8eLCAyk42Ejti",
+    "created_at": "2022-01-02 17:01:32",
+    "updated_at": "2022-02-10 11:21:31"
+  },
+  {
+    "id": 2,
+    "name": "John Doe",
+    "first_name": null,
+    "middle_name": null,
+    "last_name": null,
+    "email": "dean@gmail.com",
+    "role": "Dean",
+    "email_verified_at": null,
+    "password": "$2y$10$9Aeq8Qn4c2g1mSVwzgJ3deGnT6KJzbHojbUFLK5M84QBV3o5a3xcm",
+    "remember_token": null,
+    "created_at": "2022-01-03 13:18:45",
+    "updated_at": "2022-01-03 14:54:04"
+  },
+  {
+    "id": 3,
+    "name": "Merry Yeah",
+    "first_name": null,
+    "middle_name": null,
+    "last_name": null,
+    "email": "registrar@gmail.com",
+    "role": "Registrar",
+    "email_verified_at": null,
+    "password": "$2y$10$9Aeq8Qn4c2g1mSVwzgJ3deGnT6KJzbHojbUFLK5M84QBV3o5a3xcm",
+    "remember_token": null,
+    "created_at": "2022-01-03 13:21:33",
+    "updated_at": "2022-01-03 14:54:09"
+  },
+  {
+    "id": 5,
+    "name": "Prog Adviser",
+    "first_name": null,
+    "middle_name": null,
+    "last_name": null,
+    "email": "program_adviser@gmail.com",
+    "role": "Program Adviser",
+    "email_verified_at": null,
+    "password": "$2y$10$9Aeq8Qn4c2g1mSVwzgJ3deGnT6KJzbHojbUFLK5M84QBV3o5a3xcm",
+    "remember_token": null,
+    "created_at": "2022-01-03 13:21:33",
+    "updated_at": "2022-01-26 06:21:17"
+  },
+  {
+    "id": 6,
+    "name": "Applicant 1",
+    "first_name": null,
+    "middle_name": null,
+    "last_name": null,
+    "email": "applicant1@gmail.com",
+    "role": "Applicant",
+    "email_verified_at": null,
+    "password": "$2y$10$9Aeq8Qn4c2g1mSVwzgJ3deGnT6KJzbHojbUFLK5M84QBV3o5a3xcm",
+    "remember_token": "",
+    "created_at": "2022-01-02 17:01:32",
+    "updated_at": "2022-01-03 14:53:49"
+  }
+]

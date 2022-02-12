@@ -35,6 +35,8 @@ class Approver extends Model
         'id' => 'integer',
         'application_id' => 'integer',
         'user_id' => 'integer',
+        'approved_at' => 'datetime',
+        'rejected_at' => 'datetime',
     ];
 
     public function application()

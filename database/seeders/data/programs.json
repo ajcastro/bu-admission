@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "code": "MM",
+    "label": "Master in Management",
+    "recommending_user_id": 5,
+    "admitting_user_id": 2,
+    "processing_user_id": 3,
+    "created_at": "2022-01-03 03:37:43",
+    "updated_at": "2022-01-03 17:43:09"
+  },
+  {
+    "id": 2,
+    "code": "ME",
+    "label": "Master in Economics",
+    "recommending_user_id": 5,
+    "admitting_user_id": 2,
+    "processing_user_id": 3,
+    "created_at": "2022-01-03 03:37:52",
+    "updated_at": "2022-01-03 17:43:15"
+  },
+  {
+    "id": 3,
+    "code": "MA",
+    "label": "Master in Accounting",
+    "recommending_user_id": 5,
+    "admitting_user_id": 2,
+    "processing_user_id": 3,
+    "created_at": "2022-01-03 03:38:04",
+    "updated_at": "2022-01-03 17:43:20"
+  }
+]

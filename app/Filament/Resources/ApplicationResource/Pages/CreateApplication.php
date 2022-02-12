@@ -12,8 +12,8 @@ class CreateApplication extends CreateRecord
     protected function getFormActions(): array
     {
         return [
-            $this->getCreateButtonFormAction(),
-            $this->getCancelButtonFormAction(),
+            $this->getCreateFormAction(),
+            $this->getCancelFormAction(),
         ];
     }
 }

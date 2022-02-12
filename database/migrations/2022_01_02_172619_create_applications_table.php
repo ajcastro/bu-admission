@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ApplicationStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,12 +17,12 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('program_id');
             $table->unsignedBigInteger('term_id');
+            $table->unsignedBigInteger('program_id')->nullable();
             $table->string('last_name')->default('');
             $table->string('first_name')->default('');
             $table->string('middle_name')->default('');
-            $table->date('birthdate');
+            $table->date('birthdate')->nullable();
             $table->string('gender')->default('');
             $table->string('email')->default('');
             $table->string('mobile_number')->nullable();
@@ -41,10 +42,11 @@ class CreateApplicationsTable extends Migration
             $table->string('permanent_province')->default('');
             $table->string('permanent_zip_code')->default('');
             $table->string('permanent_country')->default('');
-            $table->string('status')->default('pending');
+            $table->string('status')->default(ApplicationStatus::PENDING);
             $table->decimal('total_units', 8, 2)->default(0);
-            $table->softDeletes();
+            $table->text('requirements')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
