@@ -58,6 +58,11 @@ class ApplicationResource extends Resource
 
                 Forms\Components\Card::make()
                     ->schema([
+                        Forms\Components\Placeholder::make('application_id')
+                            ->label('Application ID')
+                            ->content(function (?Application $record = null) {
+                                 return $record->id;
+                            }),
                         Forms\Components\Placeholder::make('status')
                             ->content(function (?Application $record = null) {
                                 $record = $record ?? new Application;
@@ -246,6 +251,7 @@ class ApplicationResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')->label('Application ID')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('applicant_name')->label('Applicant Name')->sortable(['first_name', 'last_name'])->searchable(['first_name', 'last_name']),
                 Tables\Columns\TextColumn::make('program.label')->label('Program')->sortable(),
                 Tables\Columns\TextColumn::make('term.label')->label('Term')->sortable(),
