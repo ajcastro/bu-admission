@@ -291,4 +291,9 @@ class ApplicationResource extends Resource
             'audit' => Pages\ViewApplicationAudit::route('/{record}/audit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return static::getModel()::accessibleBy(auth()->user());
+    }
 }
