@@ -13,16 +13,22 @@
             <tbody>
                 @foreach ($info as $key => $value)
                 <tr>
-                    <td width="45%">{{ $key }} </td>
-                    <td style="font-weight: bold;">{{ $value }}</td>
+                    <td>{{ $key }} </td>
+                    <td style="font-weight: bold;">&nbsp; {{ $value }}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
+    <div style="background: #fff; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 20px;">
+        Logs
+    </div>
+
     @foreach ($record->audits()->with('user')->latest()->get() as $audit)
         <div style="background: #fff; padding: 20px; border-radius: 10px;">
+            <strong># {{ $audit->id }} </strong> <br>
+
             <strong>{{ $audit->user->name ?? '[]' }}</strong> {{ $audit->event }} this application
             last {{ $audit->created_at->format('F d, Y h:i a') }}. <br><br>
 
@@ -34,8 +40,8 @@
                     @if (blank($audit->old_values)) -None- @endif
                     @foreach ($audit->old_values as $key => $value)
                     <tr>
-                        <td>{{ $key }}: </td>
-                        <td>{{ $value }}</td>
+                        <td>{{ Str::of($key)->title()->replace('_', ' ') }}: </td>
+                        <td>&nbsp; {{ $value }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -48,8 +54,8 @@
                 <tbody>
                     @foreach ($audit->new_values as $key => $value)
                     <tr>
-                        <td>{{ $key }}: </td>
-                        <td>{{ $value }}</td>
+                        <td>{{ Str::of($key)->title()->replace('_', ' ') }}: </td>
+                        <td>&nbsp; {{ $value }}</td>
                     </tr>
                     @endforeach
                 </tbody>
