@@ -48,7 +48,11 @@ class ViewApplication extends ViewRecord
                 $this->record->approve($this->record->getCurrentApprover());
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
-            ->hidden(is_null($approver) || $user->cant('approve', $this->record))
+            ->hidden(
+                $this->record->status === ApplicationStatus::REJECTED ||
+                is_null($approver) ||
+                $user->cant('approve', $this->record)
+            )
             ->requiresConfirmation()
             ;
     }
@@ -68,6 +72,7 @@ class ViewApplication extends ViewRecord
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(
+                is_null($approver) ||
                 $user->cant('approve', $this->record) ||
                 $this->record->status === ApplicationStatus::REJECTED
             )
@@ -79,15 +84,17 @@ class ViewApplication extends ViewRecord
     {
         /** @var \App\Models\User */
         $user = auth()->user();
+        $lastApprover = $this->record->getLastApprover();
 
         return ButtonAction::make('undo_approval')
-            ->label('Undo')
+            ->label('Undo Approval')
             ->icon('heroicon-s-backspace')
             ->action(function () {
                 $this->record->undoApproval($this->record->getLastApprover());
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(
+                is_null($lastApprover) ||
                 $user->cant('undoApproval', $this->record)
             )
             ->requiresConfirmation();
