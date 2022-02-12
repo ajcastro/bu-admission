@@ -150,10 +150,9 @@ class Application extends Model implements Auditable
         }
     }
 
-
-    public function scopeAccessibleBy($query, User $user)
+    public function scopeAccessibleBy($query, ?User $user)
     {
-        if ($user->isAdministrator()) {
+        if (is_null($user) || $user->isAdministrator()) {
             return;
         }
 
@@ -246,5 +245,10 @@ class Application extends Model implements Auditable
             : $prevApprover->getApplicationStatus();
 
         $this->save();
+    }
+
+    public function getApproverByAction($action)
+    {
+        return $this->approvers->where('action', $action)->first() ?? optional();
     }
 }

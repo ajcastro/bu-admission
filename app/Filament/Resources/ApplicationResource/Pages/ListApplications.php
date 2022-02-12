@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\ApplicationResource\Pages;
 
+use App\Exports\ApplicationsExport;
 use App\Filament\Resources\ApplicationResource;
 use App\Filament\Widgets\NeedToVerifyEmail;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\ListRecords;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListApplications extends ListRecords
 {
@@ -37,14 +39,26 @@ class ListApplications extends ListRecords
 
     private function getExportToExcelButton()
     {
-        $user = auth()->user();
-
-        return ButtonAction::make('approve')
+        return ButtonAction::make('export')
             ->label('Export to Excel')
             ->icon('heroicon-s-document-download')
             ->color('success')
-            ->action(function () {
-            })
+            ->action('export')
             ->hidden(false);
+    }
+
+    public function export()
+    {
+        return Excel::download(new ApplicationsExport($this->getExportRecords()), 'applications.xlsx');
+    }
+
+    /** @see \Filament\Tables\Concerns\HasRecords getTableRecords() */
+    public function getExportRecords()
+    {
+        $query = $this->getFilteredTableQuery();
+        $query->with('approvers.user');
+        $this->applySortingToTableQuery($query);
+
+        return $query->get();
     }
 }
