@@ -1,10 +1,25 @@
 <x-filament::page>
-    <p style="background: #fff; padding: 20px; border-radius: 10px;">
-        Applicant Name: <strong>{{ $record->applicant_name }}</strong> <br>
-        Program: <strong>{{ $record->program->label }}</strong> <br>
-        Term: <strong>{{ $record->term->label }}</strong> <br>
-        Total Units: <strong>{{ $record->getTotalUnits() }}</strong> <br>
-    </p>
+    <div style="background: #fff; padding: 20px; border-radius: 10px;">
+    @php
+        $info = [
+            'Applicant ID:' => $record->id,
+            'Applicant Name:' => $record->applicant_name,
+            'Program:' => $record->program->label,
+            'Term:' => $record->term->label,
+            'Total Units:' => $record->getTotalUnits(),
+        ];
+    @endphp
+        <table>
+            <tbody>
+                @foreach ($info as $key => $value)
+                <tr>
+                    <td width="45%">{{ $key }} </td>
+                    <td style="font-weight: bold;">{{ $value }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     @foreach ($record->audits()->with('user')->latest()->get() as $audit)
         <div style="background: #fff; padding: 20px; border-radius: 10px;">
