@@ -9,7 +9,8 @@ trait ImportsFromJson
         $rows = json_decode(file_get_contents($filepath), true);
 
         foreach ($rows as $row) {
-            static::create($row);
+            $model = static::find($row['id']) ?? static::make();
+            $model->fill($row)->save();
         }
     }
 }

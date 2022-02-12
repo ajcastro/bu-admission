@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
-    use HasFactory;
+    use HasFactory, Traits\ImportsFromJson;
 
     const MAX_UNITS = 12;
 

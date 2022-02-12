@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
@@ -258,7 +259,12 @@ class ApplicationResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\MultiSelectFilter::make('program')
+                    ->relationship('program', 'label'),
+                Tables\Filters\MultiSelectFilter::make('term')
+                    ->relationship('term', 'label'),
+                Tables\Filters\MultiSelectFilter::make('status')
+                    ->options(ApplicationStatus::asSelectArray()),
             ])
             ->prependActions([
                 LinkAction::make('view_audit')

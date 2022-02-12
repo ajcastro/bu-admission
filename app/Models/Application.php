@@ -70,7 +70,7 @@ class Application extends Model implements Auditable
     {
         static::creating(function (Application $application) {
             $application->user_id = $application->user_id ?? auth()->user()->id ?? null;
-            $application->term_id = Term::getActive()->id;
+            $application->term_id = $application->term_id ?? Term::getActive()->id;
         });
 
         static::created(function (Application $application) {
