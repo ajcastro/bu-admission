@@ -323,7 +323,11 @@ class ApplicationResource extends Resource
             ])
             ->filters([
                 Tables\Filters\MultiSelectFilter::make('program')
-                    ->relationship('program', 'label'),
+                    ->relationship('program', 'label')
+                    ->hidden(function () {
+                        $user = request()->user();
+                        return $user->role === UserRole::ProgramAdviser;
+                    }),
                 Tables\Filters\MultiSelectFilter::make('term')
                     ->relationship('term', 'label'),
                 Tables\Filters\MultiSelectFilter::make('status')
