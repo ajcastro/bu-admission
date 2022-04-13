@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ApplicationStatus;
 use App\Enums\ApproverAction;
 use App\Enums\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -79,5 +80,28 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->first_name || $this->last_name) {
             return "{$this->first_name} {$this->last_name}";
         }
+    }
+
+    public function getDefaultApplicationStatus()
+    {
+        if (in_array($this->role, [
+            UserRole::ProgramAdviser,
+        ])) {
+            return [ApplicationStatus::PENDING];
+        }
+
+        if (in_array($this->role, [
+            UserRole::Dean,
+        ])) {
+            return [ApplicationStatus::RECOMMENDED];
+        }
+
+        if (in_array($this->role, [
+            UserRole::Registrar,
+        ])) {
+            return [ApplicationStatus::ADMITTED];
+        }
+
+        return [];
     }
 }

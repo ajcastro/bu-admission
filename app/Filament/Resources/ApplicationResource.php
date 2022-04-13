@@ -8,8 +8,10 @@ use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Models\Application;
+use App\Models\Program;
 use App\Models\Subject;
 use App\Models\Term;
+use App\Models\User;
 use App\Services\Countries;
 use Closure;
 use Filament\Forms;
@@ -329,9 +331,17 @@ class ApplicationResource extends Resource
                         return $user->role === UserRole::ProgramAdviser;
                     }),
                 Tables\Filters\MultiSelectFilter::make('term')
-                    ->relationship('term', 'label'),
+                    ->relationship('term', 'label')
+                    ->default(function () {
+                        return [Term::getActive()->id];
+                    }),
                 Tables\Filters\MultiSelectFilter::make('status')
-                    ->options(ApplicationStatus::asSelectArray()),
+                    ->options(ApplicationStatus::asSelectArray())
+                    ->default(function () {
+                        /** @var User */
+                        $user = request()->user();
+                        return $user->getDefaultApplicationStatus();
+                    }),
             ])
             ->prependActions([
                 LinkAction::make('view_audit')
