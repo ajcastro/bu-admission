@@ -9,6 +9,7 @@ use App\Models\Application;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Arr;
+use Filament\Forms;
 
 class ViewApplication extends ViewRecord
 {
@@ -44,8 +45,8 @@ class ViewApplication extends ViewRecord
             ->label($approver->action_display ?? '')
             ->icon('heroicon-s-check')
             ->color('success')
-            ->action(function () {
-                $this->record->approve($this->record->getCurrentApprover());
+            ->action(function (array $data) {
+                $this->record->approve($this->record->getCurrentApprover(), $data['remarks'] ?? '');
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(
@@ -54,7 +55,10 @@ class ViewApplication extends ViewRecord
                 $user->cant('approve', $this->record)
             )
             ->requiresConfirmation()
-            ;
+            ->form([
+                Forms\Components\Textarea::make('remarks')
+                    ->label('Remarks')
+            ]);
     }
 
     protected function getRejectButton()

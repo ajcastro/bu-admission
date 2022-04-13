@@ -204,13 +204,14 @@ class Application extends Model implements Auditable
             ->first();
     }
 
-    public function approve(Approver $approver)
+    public function approve(Approver $approver, $remarks = '')
     {
         if ($approver->user->cannot('approve', $this)) {
             abort(403);
         }
 
         $approver->approved_at = now();
+        $approver->remarks = $remarks;
         $approver->save();
         $this->status = $approver->getApplicationStatus();
         $this->save();
@@ -223,6 +224,7 @@ class Application extends Model implements Auditable
         }
 
         $approver->rejected_at = now();
+        $approver->remarks = null;
         $approver->save();
         $this->status = ApplicationStatus::REJECTED;
         $this->save();

@@ -88,7 +88,7 @@ class ApplicationResource extends Resource
             ->columns(3);
     }
 
-    public static function getApproverFields()
+    private static function getApproverFields()
     {
         return [
             Forms\Components\Placeholder::make('recommending_approval')
@@ -105,6 +105,7 @@ class ApplicationResource extends Resource
                                 ? 'REJECTED'
                                 : ''),
                         optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
+                        $approver->remarks ? 'Remarks: '.$approver->remarks : '',
                     ])->implode('<br> '));
                 }),
 
@@ -260,7 +261,7 @@ class ApplicationResource extends Resource
         ];
     }
 
-    public static function subjectSelectionFields()
+    private static function subjectSelectionFields()
     {
         return [
             Forms\Components\Select::make('program_id')
@@ -297,7 +298,7 @@ class ApplicationResource extends Resource
         ];
     }
 
-    public static function feesFields()
+    private static function feesFields()
     {
         return [
             FeesTable::make('fees')->label('')->setFees(function (?Application $record = null) {
