@@ -123,6 +123,7 @@ class ApplicationResource extends Resource
                                 ? 'REJECTED'
                                 : ''),
                         optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
+                        $approver->remarks ? 'Remarks: '.$approver->remarks : '',
                     ])->implode('<br> '));
                 }),
 
@@ -140,6 +141,7 @@ class ApplicationResource extends Resource
                                 ? 'REJECTED'
                                 : ''),
                         optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
+                        $approver->remarks ? 'Remarks: '.$approver->remarks : '',
                     ])->implode('<br> '));
                 }),
         ];

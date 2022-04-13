@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
+use App\Events\ApplicationApproved;
+use App\Events\ApplicationRejected;
 use App\Jobs\CreateApplicationApprovers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -215,6 +217,8 @@ class Application extends Model implements Auditable
         $approver->save();
         $this->status = $approver->getApplicationStatus();
         $this->save();
+
+        event(new ApplicationApproved($this, $approver));
     }
 
     public function reject(Approver $approver, $remarks = '')
@@ -228,6 +232,8 @@ class Application extends Model implements Auditable
         $approver->save();
         $this->status = ApplicationStatus::REJECTED;
         $this->save();
+
+        event(new ApplicationRejected($this, $approver));
     }
 
     public function undoApproval(Approver $approver)

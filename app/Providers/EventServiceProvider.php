@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\ApplicationApproved;
+use App\Events\ApplicationRejected;
+use App\Listeners\ApplicationStatus\NotifyApplicant;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        ApplicationApproved::class => [
+            NotifyApplicant::class,
+        ],
+        ApplicationRejected::class => [
+            NotifyApplicant::class,
         ],
     ];
 
