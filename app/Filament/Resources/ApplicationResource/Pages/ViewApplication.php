@@ -71,8 +71,8 @@ class ViewApplication extends ViewRecord
             ->label('Reject')
             ->icon('heroicon-s-ban')
             ->color('danger')
-            ->action(function () {
-                $this->record->reject($this->record->getCurrentApprover());
+            ->action(function (array $data) {
+                $this->record->reject($this->record->getCurrentApprover(), $data['remarks'] ?? '');
                 return redirect()->route('filament.resources.applications.view', $this->record);
             })
             ->hidden(
@@ -81,7 +81,10 @@ class ViewApplication extends ViewRecord
                 $this->record->status === ApplicationStatus::REJECTED
             )
             ->requiresConfirmation()
-            ;
+            ->form([
+                Forms\Components\Textarea::make('remarks')
+                    ->label('Remarks')
+            ]);
     }
 
     public function getUndoApprovalButton()
