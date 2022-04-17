@@ -1691,16 +1691,16 @@
         },
         {
             "name": "jeffgreco13/filament-breezy",
-            "version": "v1.2.11",
+            "version": "v1.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeffgreco13/filament-breezy.git",
-                "reference": "ed59a39d4484a2024001de50233135b00b49b32b"
+                "reference": "7c90450ca848529225bdf99ffec6560134743d60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeffgreco13/filament-breezy/zipball/ed59a39d4484a2024001de50233135b00b49b32b",
-                "reference": "ed59a39d4484a2024001de50233135b00b49b32b",
+                "url": "https://api.github.com/repos/jeffgreco13/filament-breezy/zipball/7c90450ca848529225bdf99ffec6560134743d60",
+                "reference": "7c90450ca848529225bdf99ffec6560134743d60",
                 "shasum": ""
             },
             "require": {
@@ -1758,7 +1758,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jeffgreco13/filament-breezy/issues",
-                "source": "https://github.com/jeffgreco13/filament-breezy/tree/v1.2.11"
+                "source": "https://github.com/jeffgreco13/filament-breezy/tree/v1.2.13"
             },
             "funding": [
                 {
@@ -1766,7 +1766,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-05T01:09:29+00:00"
+            "time": "2022-04-14T19:15:57+00:00"
         },
         {
             "name": "laminas/laminas-code",
