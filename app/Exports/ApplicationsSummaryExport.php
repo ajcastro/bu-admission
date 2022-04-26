@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ApplicationsSummaryExport implements FromView, ShouldAutoSize
+class ApplicationsSummaryExport implements FromView/* , ShouldAutoSize */
 {
     protected $terms;
     protected $programs;
