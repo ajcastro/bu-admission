@@ -84,7 +84,7 @@ class ListApplications extends ListRecords
         return $query->get();
     }
 
-    public function export_summary_to_excel()
+    private function makeApplicationSummaryExport(): ApplicationsSummaryExport
     {
         $data = $this->getTableFiltersForm()->getState();
         $models = new ModelsFromFilter($data);
@@ -92,14 +92,22 @@ class ListApplications extends ListRecords
         $recordsByStatuses = $models->getRecordsByStatuses();
         $applications = $this->getExportSummaryRecords();
 
-        $export = new ApplicationsSummaryExport(
+        return new ApplicationsSummaryExport(
             $models->getTerms(),
             $models->getPrograms(),
             $models->getStatuses(),
             $recordsByStatuses,
             $applications
         );
+    }
 
-        return Excel::download($export, 'applications_summary.xlsx');
+    public function export_summary_to_excel()
+    {
+        return Excel::download($this->makeApplicationSummaryExport(), 'applications_summary.xlsx');
+    }
+
+    public function export_summary_to_pdf()
+    {
+        return Excel::download($this->makeApplicationSummaryExport(), 'applications_summary.pdf', \Maatwebsite\Excel\Excel::MPDF);
     }
 }
