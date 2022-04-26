@@ -22,7 +22,7 @@ class ApplicationPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdministrator()) {
+        if ($user->isAdministrator() || $user->role === UserRole::ProgramAdviser) {
             return true;
         }
     }
