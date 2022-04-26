@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources\ApplicationResource\Pages;
 
-use App\Exports\ApplicationsExport;
+use App\Exports\ApplicationsDetailedExport;
+use App\Exports\ApplicationsSummaryExport;
 use App\Filament\Resources\ApplicationResource;
 use App\Filament\Widgets\NeedToVerifyEmail;
 use Filament\Pages\Actions\ButtonAction;
@@ -38,17 +39,17 @@ class ListApplications extends ListRecords
     private function getExportButtons()
     {
         return [
-            ButtonAction::make('export_pdf')
-            ->label('Export to PDF')
+            ButtonAction::make('export_summary_to_pdf')
+            ->label('Export Summary (PDF)')
             ->icon('heroicon-s-document-download')
             ->color('danger')
-            ->action('export')
+            ->action('export_summary_to_pdf')
             ->hidden(false),
-            ButtonAction::make('export_to_excel')
-            ->label('Export to Excel')
+            ButtonAction::make('export_summary_to_excel')
+            ->label('Export Summary (Excel)')
             ->icon('heroicon-s-document-download')
             ->color('success')
-            ->action('export')
+            ->action('export_summary_to_excel')
             ->hidden(false),
             ButtonAction::make('export_full_data')
             ->label('Export Full Data')
@@ -59,18 +60,46 @@ class ListApplications extends ListRecords
         ];
     }
 
-    public function export_full_data()
-    {
-        return Excel::download(new ApplicationsExport($this->getExportRecords()), 'applications.xlsx');
-    }
-
     /** @see \Filament\Tables\Concerns\HasRecords getTableRecords() */
-    public function getExportRecords()
+    private function getExportDetailedRecords()
     {
         $query = $this->getFilteredTableQuery();
-        $query->with(['approvers.user', 'subjects:id,label,code']);
+        $query->with(['program', 'term', 'approvers.user', 'subjects:id,label,code']);
         $this->applySortingToTableQuery($query);
 
         return $query->get();
+    }
+
+    public function export_full_data()
+    {
+        return Excel::download(new ApplicationsDetailedExport($this->getExportDetailedRecords()), 'applications.xlsx');
+    }
+
+    private function getExportSummaryRecords()
+    {
+        $query = $this->getFilteredTableQuery();
+        $query->with(['program', 'term']);
+        $this->applySortingToTableQuery($query);
+
+        return $query->get();
+    }
+
+    public function export_summary_to_excel()
+    {
+        $data = $this->getTableFiltersForm()->getState();
+        $models = new ModelsFromFilter($data);
+
+        $recordsByStatuses = $models->getRecordsByStatuses();
+        $applications = $this->getExportSummaryRecords();
+
+        $export = new ApplicationsSummaryExport(
+            $models->getTerms(),
+            $models->getPrograms(),
+            $models->getStatuses(),
+            $recordsByStatuses,
+            $applications
+        );
+
+        return Excel::download($export, 'applications_summary.xlsx');
     }
 }

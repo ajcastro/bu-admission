@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ApplicationsExport implements FromCollection, WithHeadings, ShouldAutoSize
+class ApplicationsDetailedExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     protected $applications;
 
