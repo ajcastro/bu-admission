@@ -50,13 +50,38 @@ class TermResource extends Resource
             ->pushActions([
                 LinkAction::make('set_active')
                     ->label('Set Active')
+                    ->icon('heroicon-o-check')
                     ->action(function (Term $record) {
                         Term::where('id', '!=', $record->id)->update(['is_active' => 0]);
                         $record->is_active = true;
                         $record->save();
                     })
                     ->requiresConfirmation()
-                    ->modalSubheading("Are you sure to set this term as active?")
+                    ->modalSubheading("Are you sure to set this term as active?"),
+                LinkAction::make('lock')
+                    ->label('Lock')
+                    ->icon('heroicon-o-check-circle')
+                    ->action(function (Term $record) {
+                        $record->is_locked = true;
+                        $record->save();
+                    })
+                    ->hidden(function (Term $record) {
+                        return $record->is_locked;
+                    })
+                    ->requiresConfirmation()
+                    ->modalSubheading("Are you sure to lock this term?"),
+                LinkAction::make('unlock')
+                    ->label('Unlock')
+                    ->icon('heroicon-o-check-circle')
+                    ->action(function (Term $record) {
+                        $record->is_locked = false;
+                        $record->save();
+                    })
+                    ->hidden(function (Term $record) {
+                        return !$record->is_locked;
+                    })
+                    ->requiresConfirmation()
+                    ->modalSubheading("Are you sure to unlock this term?"),
             ]);
     }
 
