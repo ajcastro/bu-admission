@@ -30,24 +30,36 @@ class ListApplications extends ListRecords
     protected function getActions(): array
     {
         return array_filter(array_merge(
-            [
-                $this->getExportToExcelButton(),
-            ],
+            $this->getExportButtons(),
             parent::getActions(),
         ));
     }
 
-    private function getExportToExcelButton()
+    private function getExportButtons()
     {
-        return ButtonAction::make('export')
+        return [
+            ButtonAction::make('export_pdf')
+            ->label('Export to PDF')
+            ->icon('heroicon-s-document-download')
+            ->color('danger')
+            ->action('export')
+            ->hidden(false),
+            ButtonAction::make('export_to_excel')
             ->label('Export to Excel')
             ->icon('heroicon-s-document-download')
             ->color('success')
             ->action('export')
-            ->hidden(false);
+            ->hidden(false),
+            ButtonAction::make('export_full_data')
+            ->label('Export Full Data')
+            ->icon('heroicon-s-document-download')
+            ->color('success')
+            ->action('export_full_data')
+            ->hidden(false),
+        ];
     }
 
-    public function export()
+    public function export_full_data()
     {
         return Excel::download(new ApplicationsExport($this->getExportRecords()), 'applications.xlsx');
     }

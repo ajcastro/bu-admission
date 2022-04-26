@@ -18,6 +18,7 @@ class Subject extends Model
      */
     protected $fillable = [
         'program_id',
+        'term_id',
         'category',
         'code',
         'label',
@@ -40,5 +41,10 @@ class Subject extends Model
     public function program()
     {
         return $this->belongsTo(Program::class);
+    }
+
+    public function term()
+    {
+        return $this->belongsTo(Term::class);
     }
 }

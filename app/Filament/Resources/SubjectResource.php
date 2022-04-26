@@ -6,6 +6,7 @@ use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Models\Program;
 use App\Models\Subject;
+use App\Models\Term;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -20,15 +21,21 @@ class SubjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static ?int $navigationSort = 5;
+
     public static function form(Form $form): Form
     {
-
         return $form
             ->schema([
                 Forms\Components\Select::make('program_id')
                     ->label('Program')
                     ->required()
                     ->options(\App\Models\Program::pluck('label', 'id'))
+                    ->searchable(),
+                Forms\Components\Select::make('term_id')
+                    ->label('Term')
+                    ->required()
+                    ->options(\App\Models\Term::pluck('label', 'id'))
                     ->searchable(),
                 Forms\Components\Select::make('category')
                     ->required()
@@ -54,6 +61,7 @@ class SubjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('program')->sortable(),
+                Tables\Columns\TextColumn::make('term')->sortable(),
                 Tables\Columns\TextColumn::make('category')->sortable(),
                 Tables\Columns\TextColumn::make('code')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('label')->label('Title')->searchable()->sortable(),
@@ -105,7 +113,10 @@ class SubjectResource extends Resource
             ->addSelect([
                 'program' => Program::query()
                     ->select('label')
-                    ->whereColumn('subjects.program_id', 'programs.id')
+                    ->whereColumn('subjects.program_id', 'programs.id'),
+                'term' => Term::query()
+                    ->select('label')
+                    ->whereColumn('subjects.term_id', 'terms.id')
             ]);
     }
 

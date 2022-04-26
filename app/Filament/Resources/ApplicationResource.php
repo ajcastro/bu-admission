@@ -36,6 +36,8 @@ class ApplicationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -54,8 +56,8 @@ class ApplicationResource extends Resource
                             ]),
                         Tabs\Tab::make('Subject Selection')
                             ->schema(static::subjectSelectionFields()),
-                        Tabs\Tab::make('Fees')
-                            ->schema(static::feesFields()),
+                        // Tabs\Tab::make('Fees')
+                        //     ->schema(static::feesFields()),
                     ])
                     ->columnSpan(2),
 
@@ -188,7 +190,8 @@ class ApplicationResource extends Resource
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('mobile_number')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->required(),
                     Forms\Components\TextInput::make('phone_number')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('work_number')
@@ -332,6 +335,15 @@ class ApplicationResource extends Resource
                     ->hidden(function () {
                         $user = request()->user();
                         return $user->role === UserRole::ProgramAdviser;
+                    }),
+                Tables\Filters\MultiSelectFilter::make('subjects')
+                    ->options(Subject::pluck('label', 'id'))
+                    ->query(function (Builder $query, $data): Builder {
+                        if (blank($data['values'])) return $query;
+
+                        return $query->whereHas('subjects', function (Builder $query) use ($data) {
+                            return $query->whereIn('subjects.id', $data['values']);
+                        });
                     }),
                 Tables\Filters\MultiSelectFilter::make('term')
                     ->relationship('term', 'label')
