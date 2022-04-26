@@ -13,9 +13,9 @@ User
     <!-- - After create subject, redirect to Subject Lists, also in Programs -->
     <!-- - Change app name to "BUOU Online Admission" -->
     <!-- - *Add Subjects filter in Applications, after Programs filter -->
+    <!-- [- Make tabs as Wizard form, Next, Next] -->
     - Support pdf and doc files in Upload Requirements
-    - Make tabs as Wizard form, Next, Next
     - Add link in Dashboard to open Google Drive with label Announcement textarea
-    - Lock Term to prevent creating application for the active term
     - *Export Summary PDF/Excel
     - Embed actual logos
+    [- Lock Term to prevent creating application for the active term]
