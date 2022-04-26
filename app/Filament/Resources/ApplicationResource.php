@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
+use Livewire\TemporaryUploadedFile;
 
 class ApplicationResource extends Resource
 {
@@ -51,8 +53,14 @@ class ApplicationResource extends Resource
                                 Forms\Components\FileUpload::make('requirements')
                                     ->multiple()
                                     ->disk('public')
-                                    ->image()
+                                    ->enableReordering()
                                     ->imagePreviewHeight('250')
+                                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                                        $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                                        return (string) Str::of($baseFilename)
+                                            ->append('-'.Str::random(8))
+                                            ->append('.'.$file->getClientOriginalExtension());
+                                    })
                             ]),
                         Tabs\Tab::make('Subject Selection')
                             ->schema(static::subjectSelectionFields()),
