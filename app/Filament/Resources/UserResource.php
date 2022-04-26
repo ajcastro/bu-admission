@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\LinkAction;
 
 class UserResource extends Resource
 {
@@ -79,6 +80,23 @@ class UserResource extends Resource
             ->filters([
                 Tables\Filters\MultiSelectFilter::make('role')
                     ->options(\App\Enums\UserRole::asSelectArray())
+            ])
+            ->prependActions([
+                LinkAction::make('verify')
+                    ->label('Verify')
+                    ->icon('heroicon-o-check')
+                    ->color('success')
+                    ->action(function (User $record) {
+                        $record->email_verified_at = now();
+                        $record->save();
+                    })
+                    ->requiresConfirmation()
+                    ->modalSubheading("Are you sure to verify this user?")
+                    ->hidden(function (User $record) {
+                        /** @var User */
+                        $user = auth()->user();
+                        return filled($record->email_verified_at) || !$user->isAdministrator();
+                    }),
             ]);
     }
 
