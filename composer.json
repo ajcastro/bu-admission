@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "3x1io/filament-excel": "^1.0",
         "bensampo/laravel-enum": "^4.1",
+        "dompdf/dompdf": "^1.2",
         "filament/filament": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -16,7 +17,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
-        "owen-it/laravel-auditing": "^12.2"
+        "mpdf/mpdf": "^8.1",
+        "owen-it/laravel-auditing": "^12.2",
+        "tecnickcom/tcpdf": "^6.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
