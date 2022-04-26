@@ -17,6 +17,6 @@ User
     <!-- - Add link in Dashboard to open Google Drive with label Announcement textarea -->
     <!-- - Support pdf and doc files in Upload Requirements  -->
     <!-- - Download or preview pdf/docs file not yet working -->
-    - *Export Summary PDF/Excel
+    <!-- - *Export Summary PDF/Excel -->
     - Embed actual logos
     - Lock Term to prevent creating application for the active term
