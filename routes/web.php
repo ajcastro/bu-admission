@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DownloadController;
 use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,5 @@ Route::domain(config("filament.domain"))
     ->group(function () {
         Route::get("/register", Register::class)->name("register");
     });
+
+Route::get('download', [DownloadController::class, 'download'])->name('download');

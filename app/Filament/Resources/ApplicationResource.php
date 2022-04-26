@@ -7,6 +7,7 @@ use App\Enums\ApproverAction;
 use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
+use App\Forms\Components\FilesDownloader;
 use App\Models\Application;
 use App\Models\Program;
 use App\Models\Subject;
@@ -99,7 +100,8 @@ class ApplicationResource extends Resource
                     return (string) Str::of($baseFilename)
                         ->append('-'.Str::random(8))
                         ->append('.'.$file->getClientOriginalExtension());
-                })
+                }),
+            FilesDownloader::make('download_files'),
         ];
     }
 
