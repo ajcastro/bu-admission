@@ -18,5 +18,5 @@ User
     <!-- - Support pdf and doc files in Upload Requirements  -->
     <!-- - Download or preview pdf/docs file not yet working -->
     <!-- - *Export Summary PDF/Excel -->
-    - Embed actual logos
+    <!-- - Embed actual logos -->
     - Lock Term to prevent creating application for the active term
