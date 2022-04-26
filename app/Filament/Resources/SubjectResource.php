@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
 use App\Models\Program;
@@ -30,7 +31,12 @@ class SubjectResource extends Resource
                 Forms\Components\Select::make('program_id')
                     ->label('Program')
                     ->required()
-                    ->options(\App\Models\Program::pluck('label', 'id'))
+                    ->options(\App\Models\Program::query()
+                        ->when(request()->user()->role === UserRole::ProgramAdviser, function ($query) {
+                            $query->where('recommending_user_id', request()->user()->id);
+                        })
+                        ->pluck('label', 'id')
+                    )
                     ->searchable(),
                 Forms\Components\Select::make('term_id')
                     ->label('Term')
@@ -110,6 +116,9 @@ class SubjectResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->when(request()->user()->role === UserRole::ProgramAdviser, function ($query) {
+                $query->whereIn('program_id', request()->user()->getAdvisingPrograms(['id'])->pluck('id'));
+            })
             ->addSelect([
                 'program' => Program::query()
                     ->select('label')

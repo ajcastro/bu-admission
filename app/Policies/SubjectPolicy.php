@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -32,7 +33,7 @@ class SubjectPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAdministrator();
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 
     /**
@@ -44,7 +45,7 @@ class SubjectPolicy
      */
     public function view(User $user, Subject $subject)
     {
-        //
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 
     /**
@@ -55,7 +56,7 @@ class SubjectPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 
     /**
@@ -67,7 +68,7 @@ class SubjectPolicy
      */
     public function update(User $user, Subject $subject)
     {
-        //
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 
     /**
@@ -79,7 +80,7 @@ class SubjectPolicy
      */
     public function delete(User $user, Subject $subject)
     {
-        //
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 
     /**
@@ -91,7 +92,7 @@ class SubjectPolicy
      */
     public function restore(User $user, Subject $subject)
     {
-        //
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 
     /**
@@ -103,6 +104,6 @@ class SubjectPolicy
      */
     public function forceDelete(User $user, Subject $subject)
     {
-        //
+        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
     }
 }

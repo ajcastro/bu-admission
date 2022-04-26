@@ -104,4 +104,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return [];
     }
+
+    public function getAdvisingPrograms($columns = ['*'])
+    {
+        return Program::where('recommending_user_id', $this->id)->get($columns);
+    }
 }
