@@ -22,7 +22,7 @@ class ApplicationPolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->isAdministrator() || $user->role === UserRole::ProgramAdviser) {
+        if ($user->isAdministrator()) {
             return true;
         }
     }
@@ -75,6 +75,10 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application)
     {
+        if ($user->role === UserRole::ProgramAdviser) {
+            return true;
+        }
+
         return $application->status === ApplicationStatus::PENDING
             && $user->id === $application->user_id;
     }
