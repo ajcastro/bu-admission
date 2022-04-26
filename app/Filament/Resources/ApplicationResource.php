@@ -49,19 +49,7 @@ class ApplicationResource extends Resource
                         Tabs\Tab::make('Applicant Information')
                             ->schema(static::applicantInformationFields()),
                         Tabs\Tab::make('Upload Requirements')
-                            ->schema([
-                                Forms\Components\FileUpload::make('requirements')
-                                    ->multiple()
-                                    ->disk('public')
-                                    ->enableReordering()
-                                    ->imagePreviewHeight('250')
-                                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                        $baseFilename = head(explode('.', $file->getClientOriginalName()));
-                                        return (string) Str::of($baseFilename)
-                                            ->append('-'.Str::random(8))
-                                            ->append('.'.$file->getClientOriginalExtension());
-                                    })
-                            ]),
+                            ->schema(static::uploadRequirementsFields()),
                         Tabs\Tab::make('Subject Selection')
                             ->schema(static::subjectSelectionFields()),
                         // Tabs\Tab::make('Fees')
@@ -96,6 +84,23 @@ class ApplicationResource extends Resource
                     ->columnSpan(1),
             ])
             ->columns(3);
+    }
+
+    private static function uploadRequirementsFields()
+    {
+        return [
+            Forms\Components\FileUpload::make('requirements')
+                ->multiple()
+                ->disk('public')
+                ->enableReordering()
+                ->imagePreviewHeight('250')
+                ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                    $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                    return (string) Str::of($baseFilename)
+                        ->append('-'.Str::random(8))
+                        ->append('.'.$file->getClientOriginalExtension());
+                })
+        ];
     }
 
     private static function getApproverFields()
