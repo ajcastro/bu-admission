@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
 use App\Models\Application;
+use App\Models\Term;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -58,6 +59,10 @@ class ApplicationPolicy
      */
     public function create(User $user)
     {
+        if (Term::getActive()->is_locked) {
+            return false;
+        }
+
         return $user->role === UserRole::Applicant && $user->applications()->count() === 0 && $user->hasVerifiedEmail();
     }
 
