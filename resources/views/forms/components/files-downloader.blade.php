@@ -9,7 +9,7 @@
     :state-path="$getStatePath()"
 >
     <div x-data="{ state: $wire.entangle('{{ $getStatePath() }}') }">
-        @foreach ($getRecord()->requirements as $requirement_path)
+        @foreach (($getRecord()->requirements ?? []) as $requirement_path)
             <a href="{{ route('download', ['file' => $requirement_path]) }}" style="color: blue;">
                 {{  $requirement_path }} <br>
             </a>

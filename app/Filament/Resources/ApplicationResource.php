@@ -101,7 +101,10 @@ class ApplicationResource extends Resource
                         ->append('-'.Str::random(8))
                         ->append('.'.$file->getClientOriginalExtension());
                 }),
-            FilesDownloader::make('download_files'),
+            FilesDownloader::make('download_files')
+                ->hidden(function (?Application $record) {
+                    return !$record;
+                }),
         ];
     }
 
