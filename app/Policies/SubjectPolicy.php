@@ -33,7 +33,7 @@ class SubjectPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 
     /**
@@ -45,7 +45,7 @@ class SubjectPolicy
      */
     public function view(User $user, Subject $subject)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 
     /**
@@ -56,7 +56,7 @@ class SubjectPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 
     /**
@@ -68,7 +68,7 @@ class SubjectPolicy
      */
     public function update(User $user, Subject $subject)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 
     /**
@@ -80,7 +80,7 @@ class SubjectPolicy
      */
     public function delete(User $user, Subject $subject)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 
     /**
@@ -92,7 +92,7 @@ class SubjectPolicy
      */
     public function restore(User $user, Subject $subject)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 
     /**
@@ -104,6 +104,6 @@ class SubjectPolicy
      */
     public function forceDelete(User $user, Subject $subject)
     {
-        return $user->isAdministrator() || $user->role === UserRole::ProgramAdviser;
+        return $user->isAdministrator();
     }
 }
