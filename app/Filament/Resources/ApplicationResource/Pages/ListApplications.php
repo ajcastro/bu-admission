@@ -48,7 +48,7 @@ class ListApplications extends ListRecords
         return ButtonAction::make('refresh')
             ->label('Refresh')
             ->icon('heroicon-s-refresh')
-            ->url('');
+            ->url(request()->getRequestUri());
     }
 
     private function getExportButtons()
