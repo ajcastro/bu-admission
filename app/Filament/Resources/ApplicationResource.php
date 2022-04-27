@@ -296,7 +296,12 @@ class ApplicationResource extends Resource
             BelongsToManyCheckboxList::make('subjects')
                 ->relationship('subjects', 'label')
                 ->options(function (callable $get) {
-                    /** @var Collection */ $subjects = Subject::where('program_id', $get('program_id'))->get();
+                    /** @var Collection */
+                    $subjects = Subject::query()
+                        ->where('program_id', $get('program_id'))
+                        ->where('term_id', Term::getActive()->id)
+                        ->get();
+
                     return $subjects->keyBy('id')->map(function ($subject) {
                         return "{$subject->label} ({$subject->code}), {$subject->units} units, {$subject->professor}";
                     });
