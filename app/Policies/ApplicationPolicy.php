@@ -22,6 +22,11 @@ class ApplicationPolicy
      */
     public function before(User $user, $ability)
     {
+        if ($ability === 'create') {
+            return;
+        }
+
+
         if ($user->isAdministrator()) {
             return true;
         }
@@ -59,6 +64,10 @@ class ApplicationPolicy
      */
     public function create(User $user)
     {
+        if ($user->isAdministrator()) {
+            return false;
+        }
+
         if (Term::getActive()->is_locked) {
             return false;
         }

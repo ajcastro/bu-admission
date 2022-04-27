@@ -95,6 +95,10 @@ class ApplicationResource extends Resource
                 ->disk('public')
                 ->enableReordering()
                 ->imagePreviewHeight('250')
+                ->required()
+                ->disabled(function (Application $record) {
+                    return $record->status !== ApplicationStatus::PENDING;
+                })
                 ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
                     $baseFilename = head(explode('.', $file->getClientOriginalName()));
                     return (string) Str::of($baseFilename)
@@ -367,6 +371,10 @@ class ApplicationResource extends Resource
                         return $query->whereHas('subjects', function (Builder $query) use ($data) {
                             return $query->whereIn('subjects.id', $data['values']);
                         });
+                    })
+                    ->hidden(function () {
+                        return request()->user()->role === UserRole::ProgramAdviser
+                            || request()->user()->role === UserRole::Applicant;
                     }),
                 Tables\Filters\MultiSelectFilter::make('term')
                     ->relationship('term', 'label')

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ApplicationResource\Pages;
 
+use App\Enums\UserRole;
 use App\Exports\ApplicationsDetailedExport;
 use App\Exports\ApplicationsSummaryExport;
 use App\Filament\Resources\ApplicationResource;
@@ -31,9 +32,23 @@ class ListApplications extends ListRecords
     protected function getActions(): array
     {
         return array_filter(array_merge(
+            [$this->getRefreshButton()],
             $this->getExportButtons(),
             parent::getActions(),
         ));
+    }
+
+    private function isApplicant()
+    {
+        return request()->user()->role === UserRole::Applicant;
+    }
+
+    private function getRefreshButton()
+    {
+        return ButtonAction::make('refresh')
+            ->label('Refresh')
+            ->icon('heroicon-s-refresh')
+            ->url('');
     }
 
     private function getExportButtons()
@@ -50,13 +65,13 @@ class ListApplications extends ListRecords
             ->icon('heroicon-s-document-download')
             ->color('success')
             ->action('export_summary_to_excel')
-            ->hidden(false),
+            ->hidden($this->isApplicant()),
             ButtonAction::make('export_full_data')
             ->label('Export Full Data')
             ->icon('heroicon-s-document-download')
             ->color('success')
             ->action('export_full_data')
-            ->hidden(false),
+            ->hidden($this->isApplicant()),
         ];
     }
 
