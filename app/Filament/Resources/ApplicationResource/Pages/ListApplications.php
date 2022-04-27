@@ -44,9 +44,9 @@ class ListApplications extends ListRecords
             ->icon('heroicon-s-document-download')
             ->color('danger')
             ->action('export_summary_to_pdf')
-            ->hidden(false),
+            ->hidden(true), // hide for now
             ButtonAction::make('export_summary_to_excel')
-            ->label('Export Summary (Excel)')
+            ->label('Export Summary')
             ->icon('heroicon-s-document-download')
             ->color('success')
             ->action('export_summary_to_excel')
