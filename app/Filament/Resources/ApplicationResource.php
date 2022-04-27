@@ -304,6 +304,7 @@ class ApplicationResource extends Resource
                     $subjects = Subject::query()
                         ->where('program_id', $get('program_id'))
                         ->where('term_id', Term::getActive()->id)
+                        ->where('is_enabled', 1)
                         ->get();
 
                     return $subjects->keyBy('id')->map(function ($subject) {
