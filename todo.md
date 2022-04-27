@@ -19,4 +19,4 @@ User
     <!-- - Download or preview pdf/docs file not yet working -->
     <!-- - *Export Summary PDF/Excel -->
     <!-- - Embed actual logos -->
-    - Lock Term to prevent creating application for the active term
+    <!-- - Lock Term to prevent creating application for the active term -->
