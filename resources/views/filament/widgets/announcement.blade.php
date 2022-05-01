@@ -1,5 +1,5 @@
 <x-filament::card class="relative">
-    <div class="relative h-12 flex flex-col items-center space-y-2 rtl:space-x-reverse">
+    <div class="relative flex flex-col items-center space-y-2 rtl:space-x-reverse">
         <div class="space-y-2">
             <h2 class="text-lg sm:text-xl font-bold tracking-tight">
                 Announcement
