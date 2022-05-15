@@ -21,6 +21,6 @@ final class UserRole extends Enum
 
     public static function asSelectOptions()
     {
-        return collect(static::asSelectArray())->reject(fn ($value) => $value === static::Applicant)->all();
+        return collect(static::asSelectArray())->all();
     }
 }
