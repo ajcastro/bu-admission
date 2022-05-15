@@ -96,7 +96,11 @@ class ApplicationResource extends Resource
                 ->enableReordering()
                 ->imagePreviewHeight('250')
                 ->required()
-                ->disabled(function (Application $record) {
+                ->disabled(function (?Application $record) {
+                    if (is_null($record)) {
+                        return false;
+                    }
+
                     return $record->status !== ApplicationStatus::PENDING;
                 })
                 ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
