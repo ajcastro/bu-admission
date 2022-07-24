@@ -214,7 +214,12 @@ class ApplicationResource extends Resource
                     Forms\Components\TextInput::make('email')
                         ->email()
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->email;
+                            }
+                        }),
                     Forms\Components\TextInput::make('mobile_number')
                         ->maxLength(255)
                         ->required(),
