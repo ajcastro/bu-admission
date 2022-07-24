@@ -5,6 +5,7 @@ namespace App\Filament\Widgets;
 use App\Enums\ApplicationStatus;
 use App\Filament\DTO\ApplicationSummaryItem;
 use App\Models\Application;
+use App\Models\Term;
 use Filament\Widgets\Widget;
 
 class ApplicationsSummary extends Widget
@@ -25,32 +26,40 @@ class ApplicationsSummary extends Widget
         ];
     }
 
+    private function baseQuery()
+    {
+        $activeTerm = Term::getActive();
+
+        return Application::accessibleBy(auth()->user())
+            ->where('term_id', $activeTerm->id);
+    }
+
     private function getItems()
     {
         return collect([
             [
                 'status' => $status = ApplicationStatus::PENDING,
-                'count' => Application::accessibleBy(auth()->user())->where('status', $status)->count(),
+                'count' => $this->baseQuery()->where('status', $status)->count(),
                 'color' => 'orange',
             ],
             [
                 'status' => $status = ApplicationStatus::RECOMMENDED,
-                'count' => Application::accessibleBy(auth()->user())->where('status', $status)->count(),
+                'count' => $this->baseQuery()->where('status', $status)->count(),
                 'color' => 'green',
             ],
             [
                 'status' => $status = ApplicationStatus::ADMITTED,
-                'count' => Application::accessibleBy(auth()->user())->where('status', $status)->count(),
+                'count' => $this->baseQuery()->where('status', $status)->count(),
                 'color' => 'green',
             ],
             [
                 'status' => $status = ApplicationStatus::PROCESSED,
-                'count' => Application::accessibleBy(auth()->user())->where('status', $status)->count(),
+                'count' => $this->baseQuery()->where('status', $status)->count(),
                 'color' => 'green',
             ],
             [
                 'status' => $status = ApplicationStatus::REJECTED,
-                'count' => Application::accessibleBy(auth()->user())->where('status', $status)->count(),
+                'count' => $this->baseQuery()->where('status', $status)->count(),
                 'color' => 'red',
             ],
         ])->map(function ($item) {
