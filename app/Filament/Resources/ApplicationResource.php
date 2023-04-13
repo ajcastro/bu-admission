@@ -156,7 +156,7 @@ class ApplicationResource extends Resource
                 }),
 
             Forms\Components\Placeholder::make('processed by')
-                ->label('Processed by:')
+                ->label('Processed')
                 ->content(function (?Application $record = null) {
                     if (!$record) return;
 
