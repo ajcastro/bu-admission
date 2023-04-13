@@ -131,7 +131,7 @@ class ApplicationResource extends Resource
                             ? 'RECOMMENDED'
                             : ($approver->rejected_at
                                 ? 'REJECTED'
-                                : ''),
+                                : 'PENDING'),
                         optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
                         $approver->remarks ? 'Remarks: '.$approver->remarks : '',
                     ])->implode('<br> '));
@@ -149,7 +149,7 @@ class ApplicationResource extends Resource
                             ? 'APPROVED'
                             : ($approver->rejected_at
                                 ? 'REJECTED'
-                                : ''),
+                                : 'PENDING'),
                         optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
                         $approver->remarks ? 'Remarks: '.$approver->remarks : '',
                     ])->implode('<br> '));
@@ -167,7 +167,7 @@ class ApplicationResource extends Resource
                             ? 'PROCESSED'
                             : ($approver->rejected_at
                                 ? 'REJECTED'
-                                : ''),
+                                : 'PENDING'),
                         optional($approver->approved_at ?? $approver->rejected_at)->format('m/d/Y h:i a'),
                         $approver->remarks ? 'Remarks: '.$approver->remarks : '',
                     ])->implode('<br> '));
