@@ -7,7 +7,7 @@
   <title>Application Summary</title>
 </head>
 <body>
-  <h3>BUOUO Admission Data</h3>
+  <h3>BU Open University Admission Data</h3>
   <h4>Summarized List</h4>
 
   <br>
