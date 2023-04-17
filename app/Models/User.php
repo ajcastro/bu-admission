@@ -109,4 +109,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Program::where('recommending_user_id', $this->id)->get($columns);
     }
+
+    public static function registrar()
+    {
+        return static::where('role', 'Registrar')->first();
+    }
+
+    public static function dean()
+    {
+        return static::where('role', 'Dean')->first();
+    }
 }

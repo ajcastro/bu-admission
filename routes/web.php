@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\ExportSummaryToPdfController;
 use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,4 @@ Route::domain(config("filament.domain"))
     });
 
 Route::get('download', [DownloadController::class, 'download'])->name('download');
+Route::get('export_summary_to_pdf', ExportSummaryToPdfController::class)->name('export_summary_to_pdf');

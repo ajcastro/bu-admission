@@ -9,6 +9,8 @@ use App\Filament\Resources\ApplicationResource;
 use App\Filament\Widgets\NeedToVerifyEmail;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ListApplications extends ListRecords
@@ -59,7 +61,7 @@ class ListApplications extends ListRecords
             ->icon('heroicon-s-document-download')
             ->color('danger')
             ->action('export_summary_to_pdf')
-            ->hidden(true), // hide for now
+            ->hidden(false),
             ButtonAction::make('export_summary_to_excel')
             ->label('Export Summary')
             ->icon('heroicon-s-document-download')
@@ -101,8 +103,8 @@ class ListApplications extends ListRecords
 
     private function makeApplicationSummaryExport(): ApplicationsSummaryExport
     {
-        $data = $this->getTableFiltersForm()->getState();
-        $models = new ModelsFromFilter($data);
+        $filters = $this->getTableFiltersForm()->getState();
+        $models = new ModelsFromFilter($filters);
 
         $recordsByStatuses = $models->getRecordsByStatuses();
         $applications = $this->getExportSummaryRecords();
@@ -121,8 +123,19 @@ class ListApplications extends ListRecords
         return Excel::download($this->makeApplicationSummaryExport(), 'applications_summary.xlsx');
     }
 
+    private function makeApplicationSummaryExportToPdf(): string
+    {
+        $exportId = Str::random(16);
+        $filters = $this->getTableFiltersForm()->getState();
+        Cache::put("export_summary_to_pdf.{$exportId}", $filters, now()->addMinute());
+
+        return $exportId;
+    }
+
     public function export_summary_to_pdf()
     {
-        return Excel::download($this->makeApplicationSummaryExport(), 'applications_summary.pdf', \Maatwebsite\Excel\Excel::MPDF);
+        return redirect()->route('export_summary_to_pdf', [
+            'export_id' => $this->makeApplicationSummaryExportToPdf(),
+        ]);
     }
 }
