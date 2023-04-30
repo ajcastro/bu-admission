@@ -52,7 +52,10 @@ class ApplicationResource extends Resource
                         Tabs\Tab::make('Upload Requirements')
                             ->schema(static::uploadRequirementsFields()),
                         Tabs\Tab::make('Subject Selection')
-                            ->schema(static::subjectSelectionFields()),
+                            ->schema(static::subjectSelectionFields())
+                            ->disabled(function (?Application $record = null) {
+                                return strtolower($record->status) !== 'admitted';
+                            }),
                         // Tabs\Tab::make('Fees')
                         //     ->schema(static::feesFields()),
                     ])
