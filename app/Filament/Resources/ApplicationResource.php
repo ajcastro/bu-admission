@@ -54,7 +54,8 @@ class ApplicationResource extends Resource
                         Tabs\Tab::make('Subject Selection')
                             ->schema(static::subjectSelectionFields())
                             ->disabled(function (?Application $record = null) {
-                                return strtolower($record->status) !== 'admitted';
+                                return strtolower($record->status) !== 'admitted'
+                                    && \App\Models\Setting::value('toggle1') == 1;
                             }),
                         // Tabs\Tab::make('Fees')
                         //     ->schema(static::feesFields()),
