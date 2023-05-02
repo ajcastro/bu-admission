@@ -349,20 +349,6 @@ class ApplicationResource extends Resource
                             'Widower' => 'Widower',
                             'Others' => 'Others',
                         ]),
-                    // Forms\Components\TextInput::make('email')
-                    //     ->email()
-                    //     ->required()
-                    //     ->maxLength(255)
-                    //     ->default(function () {
-                    //         if (auth()->user()->role === UserRole::Applicant) {
-                    //             return auth()->user()->email;
-                    //         }
-                    //     }),
-                    // Forms\Components\TextInput::make('mobile_number')
-                    //     ->maxLength(255)
-                    //     ->required(),
-                    // Forms\Components\TextInput::make('phone_number')
-                    //     ->maxLength(255),
                     Forms\Components\TextInput::make('work_number')
                         ->label('Present Occupation / Position')
                         ->maxLength(255),
@@ -372,12 +358,12 @@ class ApplicationResource extends Resource
                 ]),
             Fieldset::make('Mailing Address')
                 ->schema([
-                    // Forms\Components\TextInput::make('residence_address_line_1')
-                    //     ->maxLength(255)
-                    //     ->required(),
-                    Forms\Components\TextInput::make('residence_address_line_2')
+                    Forms\Components\TextInput::make('residence_address_line_1')
                         ->label('Residence / Street')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->required(),
+                    // Forms\Components\TextInput::make('residence_address_line_2')
+                    //     ->maxLength(255),
                     Forms\Components\TextInput::make('residence_municipality')
                         ->label('City / Town')
                         ->maxLength(255)
@@ -420,10 +406,11 @@ class ApplicationResource extends Resource
                 ->schema([
                     // Forms\Components\Toggle::make('same_with_residence_address'),
                     Forms\Components\TextInput::make('permanent_address_line_1')
+                        ->label('Residence / Street')
                         ->maxLength(255)
                         ->required(),
-                    Forms\Components\TextInput::make('permanent_address_line_2')
-                        ->maxLength(255),
+                    // Forms\Components\TextInput::make('permanent_address_line_2')
+                    //     ->maxLength(255),
                     Forms\Components\TextInput::make('permanent_municipality')
                         ->maxLength(255)
                         ->required(),
@@ -438,13 +425,33 @@ class ApplicationResource extends Resource
                         ->options(Countries::asSelectOptions())
                         ->searchable(),
                 ]),
+            Fieldset::make('Contact Information')
+                ->schema([
+                    Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->required()
+                        ->maxLength(255)
+                        ->default(function () {
+                            if (auth()->user()->role === UserRole::Applicant) {
+                                return auth()->user()->email;
+                            }
+                        })
+                        ->columnSpan(2),
+                    Forms\Components\TextInput::make('mobile_number')
+                        ->maxLength(255)
+                        ->required(),
+                    Forms\Components\TextInput::make('phone_number')
+                        ->label('Telephone No. / Fax No.')
+                        ->maxLength(255),
+                ])
+                ->columns(2),
             Fieldset::make('Academic Background')
                 ->schema([
                     Forms\Components\Textarea::make('academic_background')
                         ->label(new HtmlString('Please enter according to:<br>
                         Institution Attended - Major Field - Degree and Date Received'))
                 ])
-                ->columns(1)
+                ->columns(1),
         ];
     }
 
