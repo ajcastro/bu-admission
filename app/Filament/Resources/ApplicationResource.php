@@ -109,29 +109,130 @@ class ApplicationResource extends Resource
                 ->options(\App\Models\Program::pluck('label', 'id'))
                 ->searchable()
                 ->reactive(),
-            Forms\Components\FileUpload::make('requirements')
-                ->multiple()
-                ->disk('public')
-                ->enableReordering()
-                ->imagePreviewHeight('250')
-                ->required()
-                ->disabled(function (?Application $record) {
-                    if (is_null($record)) {
-                        return false;
-                    }
+            Fieldset::make('Certification and Disclosure Agreement')
+                ->schema([
+                    // Certification and Disclosure Agreement
+                    Forms\Components\FileUpload::make('file_certification')
+                        ->label('')
+                        ->multiple()
+                        ->disk('public')
+                        ->enableReordering()
+                        ->imagePreviewHeight('250')
+                        // ->required()
+                        ->enableDownload()
+                        ->enableOpen()
+                        ->disabled(function (?Application $record) {
+                            if (is_null($record)) {
+                                return false;
+                            }
 
-                    return $record->status !== ApplicationStatus::PENDING;
-                })
-                ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                    $baseFilename = head(explode('.', $file->getClientOriginalName()));
-                    return (string) Str::of($baseFilename)
-                        ->append('-'.Str::random(8))
-                        ->append('.'.$file->getClientOriginalExtension());
-                }),
-            FilesDownloader::make('download_files')
-                ->hidden(function (?Application $record) {
-                    return !$record;
-                }),
+                            return $record->status !== ApplicationStatus::PENDING;
+                        })
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                            $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                            return (string) Str::of($baseFilename)
+                                ->append('-'.Str::random(8))
+                                ->append('.'.$file->getClientOriginalExtension());
+                        }),
+                ])->columns(1),
+            Fieldset::make('Documentary Requirements')
+                ->schema([
+                    // Official Transcript of Record w/ GWA
+                    Forms\Components\FileUpload::make('file_otr')
+                        ->label('Official Transcript of Record w/ GWA [max file size: 5MB, supported file types jpg,png,pdf,docx,doc]')
+                        ->multiple()
+                        ->disk('public')
+                        ->enableReordering()
+                        ->imagePreviewHeight('250')
+                        // ->required()
+                        ->enableDownload()
+                        ->enableOpen()
+                        ->disabled(function (?Application $record) {
+                            if (is_null($record)) {
+                                return false;
+                            }
+
+                            return $record->status !== ApplicationStatus::PENDING;
+                        })
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                            $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                            return (string) Str::of($baseFilename)
+                                ->append('-'.Str::random(8))
+                                ->append('.'.$file->getClientOriginalExtension());
+                        }),
+
+                    // Graduate Study
+                    Forms\Components\FileUpload::make('file_graduate_study')
+                        ->label('Graduate Study [max file size: 5MB, supported file types jpg,png,pdf,docx,doc]')
+                        ->multiple()
+                        ->disk('public')
+                        ->enableReordering()
+                        ->imagePreviewHeight('250')
+                        // ->required()
+                        ->enableDownload()
+                        ->enableOpen()
+                        ->disabled(function (?Application $record) {
+                            if (is_null($record)) {
+                                return false;
+                            }
+
+                            return $record->status !== ApplicationStatus::PENDING;
+                        })
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                            $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                            return (string) Str::of($baseFilename)
+                                ->append('-'.Str::random(8))
+                                ->append('.'.$file->getClientOriginalExtension());
+                        }),
+
+                    // Birth Certificate
+                    Forms\Components\FileUpload::make('file_birth_certificate')
+                        ->label('Birth Certificate|Marriage Certificate [max file size: 5MB, supported file types jpg,png,pdf,docx,doc]')
+                        ->multiple()
+                        ->disk('public')
+                        ->enableReordering()
+                        ->imagePreviewHeight('250')
+                        // ->required()
+                        ->enableDownload()
+                        ->enableOpen()
+                        ->disabled(function (?Application $record) {
+                            if (is_null($record)) {
+                                return false;
+                            }
+
+                            return $record->status !== ApplicationStatus::PENDING;
+                        })
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                            $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                            return (string) Str::of($baseFilename)
+                                ->append('-'.Str::random(8))
+                                ->append('.'.$file->getClientOriginalExtension());
+                        }),
+
+                    // Other Documents
+                    Forms\Components\FileUpload::make('requirements')
+                        ->label('Other Documents [max file size: 5MB, supported file types jpg,png,pdf,docx,doc]')
+                        ->multiple()
+                        ->disk('public')
+                        ->enableReordering()
+                        ->imagePreviewHeight('250')
+                        // ->required()
+                        ->enableDownload()
+                        ->enableOpen()
+                        ->disabled(function (?Application $record) {
+                            if (is_null($record)) {
+                                return false;
+                            }
+
+                            return $record->status !== ApplicationStatus::PENDING;
+                        })
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                            $baseFilename = head(explode('.', $file->getClientOriginalName()));
+                            return (string) Str::of($baseFilename)
+                                ->append('-'.Str::random(8))
+                                ->append('.'.$file->getClientOriginalExtension());
+                        }),
+                ])->columns(1)
         ];
     }
 

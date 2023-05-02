@@ -51,6 +51,10 @@ class Application extends Model implements Auditable
         'permanent_country',
         'status',
         'total_units',
+        'file_certification',
+        'file_otr',
+        'file_graduate_study',
+        'file_birth_certificate',
         'requirements',
     ];
 
@@ -65,6 +69,10 @@ class Application extends Model implements Auditable
         'birthdate' => 'date',
         'same_with_residence_address' => 'boolean',
         'total_units' => 'decimal:2',
+        'file_certification' => 'array',
+        'file_otr' => 'array',
+        'file_graduate_study' => 'array',
+        'file_birth_certificate' => 'array',
         'requirements' => 'array',
     ];
 
