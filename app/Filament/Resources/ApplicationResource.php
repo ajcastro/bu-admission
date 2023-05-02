@@ -99,6 +99,16 @@ class ApplicationResource extends Resource
     private static function uploadRequirementsFields()
     {
         return [
+            Forms\Components\TextInput::make('gwa')
+                ->label('General Weighted Average (GWA)')
+                ->maxLength(255)
+                ->numeric(),
+            Forms\Components\Select::make('program_id')
+                ->label('OU Program Applied For')
+                ->required()
+                ->options(\App\Models\Program::pluck('label', 'id'))
+                ->searchable()
+                ->reactive(),
             Forms\Components\FileUpload::make('requirements')
                 ->multiple()
                 ->disk('public')
@@ -312,7 +322,7 @@ class ApplicationResource extends Resource
             SubjectsInstructions::make('subjects_instructions')
                 ->label(''),
             Forms\Components\Select::make('program_id')
-                ->label('Program')
+                ->label('Name of OU Program')
                 ->required()
                 ->options(\App\Models\Program::pluck('label', 'id'))
                 ->searchable()
