@@ -8,6 +8,7 @@ use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
 use App\Forms\Components\FilesDownloader;
+use App\Forms\Components\SubjectsInstructions;
 use App\Models\Application;
 use App\Models\Program;
 use App\Models\Subject;
@@ -49,11 +50,15 @@ class ApplicationResource extends Resource
                     ->tabs([
                         Tabs\Tab::make('Applicant Information')
                             ->schema(static::applicantInformationFields()),
-                        Tabs\Tab::make('Upload Requirements')
+                        Tabs\Tab::make('Requirements')
                             ->schema(static::uploadRequirementsFields()),
                         Tabs\Tab::make('Subject Selection')
                             ->schema(static::subjectSelectionFields())
                             ->disabled(function (?Application $record = null) {
+                                if (is_null($record)) {
+                                    return true;
+                                }
+
                                 return strtolower($record->status) !== 'admitted'
                                     && \App\Models\Setting::value('toggle1') == 1;
                             }),
@@ -304,6 +309,8 @@ class ApplicationResource extends Resource
     private static function subjectSelectionFields()
     {
         return [
+            SubjectsInstructions::make('subjects_instructions')
+                ->label(''),
             Forms\Components\Select::make('program_id')
                 ->label('Program')
                 ->required()
