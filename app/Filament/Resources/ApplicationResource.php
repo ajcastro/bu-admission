@@ -327,74 +327,94 @@ class ApplicationResource extends Resource
                                 return auth()->user()->middle_name;
                             }
                         }),
+                    Forms\Components\Placeholder::make('middle_name_spacer')
+                        ->label(''),
                     Forms\Components\DatePicker::make('birthdate')
+                        ->label('Date of Birth')
                         ->required(),
+                    Forms\Components\TextInput::make('birthplace')
+                        ->label('Place of Birth')
+                        ->maxLength(255),
                     Forms\Components\Select::make('gender')
                         ->required()
                         ->options([
                             'Male' => 'Male',
                             'Female' => 'Female',
                         ]),
-                    Forms\Components\TextInput::make('email')
-                        ->email()
+                    Forms\Components\Select::make('civil_status')
                         ->required()
-                        ->maxLength(255)
-                        ->default(function () {
-                            if (auth()->user()->role === UserRole::Applicant) {
-                                return auth()->user()->email;
-                            }
-                        }),
-                    Forms\Components\TextInput::make('mobile_number')
-                        ->maxLength(255)
-                        ->required(),
-                    Forms\Components\TextInput::make('phone_number')
-                        ->maxLength(255),
+                        ->options([
+                            'Single' => 'Single',
+                            'Married' => 'Married',
+                            'Widower' => 'Widower',
+                            'Others' => 'Others',
+                        ]),
+                    // Forms\Components\TextInput::make('email')
+                    //     ->email()
+                    //     ->required()
+                    //     ->maxLength(255)
+                    //     ->default(function () {
+                    //         if (auth()->user()->role === UserRole::Applicant) {
+                    //             return auth()->user()->email;
+                    //         }
+                    //     }),
+                    // Forms\Components\TextInput::make('mobile_number')
+                    //     ->maxLength(255)
+                    //     ->required(),
+                    // Forms\Components\TextInput::make('phone_number')
+                    //     ->maxLength(255),
                     Forms\Components\TextInput::make('work_number')
+                        ->label('Present Occupation / Position')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('company')
+                        ->label('Employer (Institution / Company)')
                         ->maxLength(255),
                 ]),
-            Fieldset::make('Residence Address')
+            Fieldset::make('Mailing Address')
                 ->schema([
-                    Forms\Components\TextInput::make('residence_address_line_1')
-                        ->maxLength(255)
-                        ->required(),
+                    // Forms\Components\TextInput::make('residence_address_line_1')
+                    //     ->maxLength(255)
+                    //     ->required(),
                     Forms\Components\TextInput::make('residence_address_line_2')
+                        ->label('Residence / Street')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('residence_municipality')
+                        ->label('City / Town')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\TextInput::make('residence_province')
+                        ->label('Province / State')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\TextInput::make('residence_zip_code')
                         ->maxLength(255)
                         ->required(),
                     Forms\Components\Select::make('residence_country')
+                        ->label('Country')
                         ->required()
                         ->options(Countries::asSelectOptions())
                         ->searchable(),
                 ]),
 
-            Forms\Components\Toggle::make('same_with_residence_address')
-                ->reactive()
-                ->afterStateUpdated(function ($get, $set, $state) {
-                    if ($state) {
-                        $set('permanent_address_line_1', $get('residence_address_line_1'));
-                        $set('permanent_address_line_2', $get('residence_address_line_2'));
-                        $set('permanent_municipality', $get('residence_municipality'));
-                        $set('permanent_province', $get('residence_province'));
-                        $set('permanent_zip_code', $get('residence_zip_code'));
-                        $set('permanent_country', $get('residence_country'));
-                    } else {
-                        $set('permanent_address_line_1', '');
-                        $set('permanent_address_line_2', '');
-                        $set('permanent_municipality', '');
-                        $set('permanent_province', '');
-                        $set('permanent_zip_code', '');
-                        $set('permanent_country', '');
-                    }
-                }),
+            // Forms\Components\Toggle::make('same_with_residence_address')
+            //     ->reactive()
+            //     ->afterStateUpdated(function ($get, $set, $state) {
+            //         if ($state) {
+            //             $set('permanent_address_line_1', $get('residence_address_line_1'));
+            //             $set('permanent_address_line_2', $get('residence_address_line_2'));
+            //             $set('permanent_municipality', $get('residence_municipality'));
+            //             $set('permanent_province', $get('residence_province'));
+            //             $set('permanent_zip_code', $get('residence_zip_code'));
+            //             $set('permanent_country', $get('residence_country'));
+            //         } else {
+            //             $set('permanent_address_line_1', '');
+            //             $set('permanent_address_line_2', '');
+            //             $set('permanent_municipality', '');
+            //             $set('permanent_province', '');
+            //             $set('permanent_zip_code', '');
+            //             $set('permanent_country', '');
+            //         }
+            //     }),
 
             Fieldset::make('Permanent Address')
                 ->schema([
@@ -418,6 +438,13 @@ class ApplicationResource extends Resource
                         ->options(Countries::asSelectOptions())
                         ->searchable(),
                 ]),
+            Fieldset::make('Academic Background')
+                ->schema([
+                    Forms\Components\Textarea::make('academic_background')
+                        ->label(new HtmlString('Please enter according to:<br>
+                        Institution Attended - Major Field - Degree and Date Received'))
+                ])
+                ->columns(1)
         ];
     }
 
