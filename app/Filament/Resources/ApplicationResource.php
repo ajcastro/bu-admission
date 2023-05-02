@@ -7,7 +7,9 @@ use App\Enums\ApproverAction;
 use App\Enums\UserRole;
 use App\Filament\Forms\Components\FeesTable;
 use App\Filament\Resources\ApplicationResource\Pages;
+use App\Forms\Components\CertificationLabel;
 use App\Forms\Components\FilesDownloader;
+use App\Forms\Components\RequirementsLabel;
 use App\Forms\Components\SubjectsInstructions;
 use App\Models\Application;
 use App\Models\Program;
@@ -111,6 +113,7 @@ class ApplicationResource extends Resource
                 ->reactive(),
             Fieldset::make('Certification and Disclosure Agreement')
                 ->schema([
+                    CertificationLabel::make('certification_label')->label(''),
                     // Certification and Disclosure Agreement
                     Forms\Components\FileUpload::make('file_certification')
                         ->label('')
@@ -137,6 +140,7 @@ class ApplicationResource extends Resource
                 ])->columns(1),
             Fieldset::make('Documentary Requirements')
                 ->schema([
+                    RequirementsLabel::make('requirements_label')->label(''),
                     // Official Transcript of Record w/ GWA
                     Forms\Components\FileUpload::make('file_otr')
                         ->label('Official Transcript of Record w/ GWA [max file size: 5MB, supported file types jpg,png,pdf,docx,doc]')
