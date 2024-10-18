@@ -2,6 +2,7 @@
   {
     "id": 1,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "MIMI",
     "label": "Major in Management",
@@ -14,6 +15,7 @@
   {
     "id": 2,
     "program_id": 1,
+    "term_id": 1,
     "category": "Thesis",
     "code": "MM",
     "label": "Major Major",
@@ -26,6 +28,7 @@
   {
     "id": 3,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "MA",
     "label": "Major Almond",
@@ -38,6 +41,7 @@
   {
     "id": 4,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "MB",
     "label": "Major Banana",
@@ -50,6 +54,7 @@
   {
     "id": 5,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "MC",
     "label": "Major Costa Rica",
@@ -62,6 +67,7 @@
   {
     "id": 6,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "MD",
     "label": "Major Doctoral",
@@ -74,6 +80,7 @@
   {
     "id": 7,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "ME",
     "label": "Major English",
@@ -86,6 +93,7 @@
   {
     "id": 8,
     "program_id": 1,
+    "term_id": 1,
     "category": "Major",
     "code": "MF",
     "label": "Major Fahrenheit",
@@ -98,6 +106,7 @@
   {
     "id": 9,
     "program_id": 2,
+    "term_id": 1,
     "category": "Major",
     "code": "MG",
     "label": "Major Grader",
@@ -110,6 +119,7 @@
   {
     "id": 10,
     "program_id": 2,
+    "term_id": 1,
     "category": "Major",
     "code": "MH",
     "label": "Major Higher",
@@ -122,6 +132,7 @@
   {
     "id": 11,
     "program_id": 2,
+    "term_id": 1,
     "category": "Major",
     "code": "MI",
     "label": "Major Indiana",
@@ -134,6 +145,7 @@
   {
     "id": 12,
     "program_id": 2,
+    "term_id": 1,
     "category": "Major",
     "code": "MJ",
     "label": "Major Jaguar",
@@ -146,6 +158,7 @@
   {
     "id": 13,
     "program_id": 3,
+    "term_id": 1,
     "category": "Major",
     "code": "MK",
     "label": "Major Kilometer",
@@ -158,6 +171,7 @@
   {
     "id": 14,
     "program_id": 3,
+    "term_id": 1,
     "category": "Major",
     "code": "ML",
     "label": "Major Lion",
@@ -170,6 +184,7 @@
   {
     "id": 15,
     "program_id": 3,
+    "term_id": 1,
     "category": "Major",
     "code": "MN",
     "label": "Major Northern",
