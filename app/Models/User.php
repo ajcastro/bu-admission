@@ -56,9 +56,24 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    public static function registrar()
+    {
+        return static::where('role', 'Registrar')->first();
+    }
+
+    public static function dean()
+    {
+        return static::where('role', 'Dean')->first();
+    }
+
     public function applications()
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function hasVerifiedEmail()
+    {
+        return true; // skipping the mail verification because we don't have available mail provider at the moment
     }
 
     public function isAdministrator()
@@ -108,15 +123,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAdvisingPrograms($columns = ['*'])
     {
         return Program::where('recommending_user_id', $this->id)->get($columns);
-    }
-
-    public static function registrar()
-    {
-        return static::where('role', 'Registrar')->first();
-    }
-
-    public static function dean()
-    {
-        return static::where('role', 'Dean')->first();
     }
 }
