@@ -58,7 +58,7 @@ class ApplicationResource extends Resource
                             ->schema(static::subjectSelectionFields())
                             ->disabled(function (?Application $record = null) {
                                 if (is_null($record)) {
-                                    return true;
+                                    return false;
                                 }
 
                                 return strtolower($record->status) !== 'admitted'
